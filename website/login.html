@@ -8,22 +8,22 @@
 </head>
 <body>
     <header>
-        <h1>Iniciar sesión</h1>
+        <h1>Sign In</h1>
     </header>
     <main>
         <section>
             <h2>Login</h2>
             <form id="loginForm">
-                <input type="text" id="username" placeholder="Usuario" required>
-                <input type="password" id="password" placeholder="Contraseña" required>
-                <button type="submit">Ingresar</button>
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
             </form>
-            <a href="#" id="forgotLink">¿Olvidaste tu contraseña?</a>
+            <a href="#" id="forgotLink">Forgot your password?</a>
             <div id="loginMessage"></div>
         </section>
         <section>
             <div class="user-demo-box">
-                <h3>Usuarios de prueba</h3>
+                <h3>Test Users</h3>
                 <ul id="userList"></ul>
             </div>
         </section>
@@ -52,13 +52,13 @@
         const user = users.find(u => u.username === username && u.password === password);
         const msg = document.getElementById('loginMessage');
         if (user) {
-            msg.textContent = `¡Bienvenido, ${username}! Redirigiendo...`;
+            msg.textContent = `Welcome, ${username}! Redirecting...`;
             msg.style.color = 'green';
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 1200);
         } else {
-            msg.textContent = 'Usuario o contraseña incorrectos.';
+            msg.textContent = 'Incorrect username or password.';
             msg.style.color = 'red';
         }
     });
@@ -66,14 +66,14 @@
     // Olvidé mi contraseña
     document.getElementById('forgotLink').addEventListener('click', function(e) {
         e.preventDefault();
-        const username = prompt('Ingresa tu usuario:');
+        const username = prompt('Enter your username:');
         const user = users.find(u => u.username === username);
         const msg = document.getElementById('loginMessage');
         if (user) {
-            msg.textContent = `Tu contraseña es: ${user.password}`;
+            msg.textContent = `Your password is: ${user.password}`;
             msg.style.color = 'blue';
         } else {
-            msg.textContent = 'Usuario no encontrado.';
+            msg.textContent = 'User not found.';
             msg.style.color = 'orange';
         }
     });
