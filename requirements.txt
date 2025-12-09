@@ -1,0 +1,20 @@
+# Test Automation Framework - Python Dependencies
+
+# Selenium WebDriver
+selenium==3.141.0
+
+# WebDriver Manager (auto-downloads browser drivers)
+webdriver-manager==4.0.2
+
+# Pytest Framework
+pytest==9.0.2
+pytest-html==4.1.1
+pytest-metadata==3.1.1
+
+# Data Handling
+openpyxl==3.1.5
+
+# Additional Dependencies
+urllib3>=2.6.1
+requests>=2.32.5
+certifi>=2025.11.12

@@ -1,0 +1,282 @@
+# ============================================================================
+# SELENIUM TEST FRAMEWORK - COMMAND REFERENCE SHEET
+# ============================================================================
+
+# ============================================================================
+# SETUP & INSTALLATION
+# ============================================================================
+
+# Install all dependencies
+python -m pip install -r requirements.txt
+
+# Install individual packages
+python -m pip install selenium pytest pytest-html openpyxl webdriver-manager
+
+# Verify installation
+python -c "import selenium; print('Selenium:', selenium.__version__)"
+pytest --version
+
+# ============================================================================
+# RUNNING TESTS
+# ============================================================================
+
+# --- Basic Execution ---
+pytest                                  # Run all tests
+pytest -v                              # Verbose output
+pytest -v -s                           # Verbose with print statements
+pytest --tb=short                      # Short traceback
+
+# --- By Test File ---
+pytest tests/test_authentication.py
+pytest tests/test_shopping.py
+pytest tests/test_e2e_checkout.py
+pytest tests/test_cross_browser.py
+pytest tests/test_iframe_interaction.py
+
+# --- By Test Class ---
+pytest tests/test_authentication.py::TestAuthentication
+pytest tests/test_shopping.py::TestShopping
+
+# --- By Test Method ---
+pytest tests/test_authentication.py::TestAuthentication::test_login_page_elements
+pytest tests/test_shopping.py::TestShopping::test_add_product_to_cart
+
+# --- By Marker ---
+pytest -m smoke                        # Smoke tests only
+pytest -m regression                   # Regression suite
+pytest -m data_driven                  # Data-driven tests
+pytest -m e2e                         # End-to-end tests
+pytest -m cross_browser               # Cross-browser tests
+pytest -m iframe                      # Iframe tests
+pytest -m slow                        # Long-running tests
+
+# --- Multiple Markers ---
+pytest -m "smoke or regression"        # OR condition
+pytest -m "smoke and not slow"         # AND NOT condition
+
+# ============================================================================
+# REPORTING
+# ============================================================================
+
+# --- HTML Reports ---
+pytest --html=test_results/report.html
+pytest --html=test_results/report.html --self-contained-html
+pytest --html=report.html --self-contained-html -v
+
+# --- Logging ---
+pytest --log-cli-level=INFO
+pytest --log-cli-level=DEBUG
+pytest --log-file=execution.log
+
+# --- JUnit XML (for CI/CD) ---
+pytest --junitxml=test_results/junit.xml
+
+# ============================================================================
+# BROWSER CONFIGURATION
+# ============================================================================
+
+# --- Browser Selection ---
+pytest --browser=chrome               # Chrome (default)
+pytest --browser=firefox              # Firefox
+
+# --- Headless Mode ---
+pytest --headless                     # Run without GUI
+pytest --browser=chrome --headless
+pytest --browser=firefox --headless
+
+# --- Custom Base URL ---
+pytest --base-url="http://localhost:8000"
+pytest --base-url="file:///C:/path/to/website"
+
+# ============================================================================
+# TEST FILTERING
+# ============================================================================
+
+# --- By Keyword ---
+pytest -k "login"                     # Tests containing "login"
+pytest -k "not slow"                  # Exclude slow tests
+pytest -k "search or filter"          # Multiple keywords
+
+# --- First N Tests ---
+pytest tests/ --maxfail=5             # Stop after 5 failures
+pytest tests/ -x                      # Stop on first failure
+
+# --- Specific Count ---
+pytest tests/ --count=3               # Run each test 3 times (requires pytest-repeat)
+
+# ============================================================================
+# PARALLEL EXECUTION (requires pytest-xdist)
+# ============================================================================
+
+# Install: python -m pip install pytest-xdist
+
+pytest -n auto                        # Auto-detect CPU cores
+pytest -n 4                          # Run with 4 workers
+pytest -n 2 tests/                   # 2 parallel workers
+
+# ============================================================================
+# DEBUGGING
+# ============================================================================
+
+# --- Interactive Debugging ---
+pytest --pdb                          # Drop to debugger on failure
+pytest --trace                        # Immediately drop to debugger
+pytest --pdbcls=IPython.terminal.debugger:TerminalPdb  # Use IPython debugger
+
+# --- Verbose Output ---
+pytest -vv                           # Extra verbose
+pytest -v -s                         # Show print statements
+pytest --capture=no                  # Don't capture output
+
+# --- Show Local Variables ---
+pytest -l                            # Show locals in tracebacks
+pytest --showlocals                  # Same as -l
+
+# ============================================================================
+# QUICK TEST COMMANDS
+# ============================================================================
+
+# --- Smoke Test (Fastest) ---
+pytest -m smoke -v
+
+# --- Data-Driven Sample ---
+pytest tests/test_authentication.py::TestAuthentication::test_login_with_csv_data -v
+
+# --- E2E Workflow ---
+pytest tests/test_e2e_checkout.py -v
+
+# --- Cross-Browser ---
+pytest tests/test_cross_browser.py::TestCrossBrowser::test_login_page_on_multiple_browsers -v
+
+# --- Iframe Test ---
+pytest tests/test_iframe_interaction.py::TestIframeInteraction::test_iframe_interaction_on_contact_page -v
+
+# ============================================================================
+# CUSTOM SCRIPT
+# ============================================================================
+
+# Run quick demo tests
+python run_quick_tests.py
+
+# View framework summary
+python FRAMEWORK_SUMMARY.py
+
+# ============================================================================
+# DIRECTORY OPERATIONS
+# ============================================================================
+
+# List project structure
+tree /F
+
+# Create test results directory
+mkdir test_results
+mkdir test_results\screenshots
+
+# Clean test results
+Remove-Item test_results\* -Recurse -Force
+
+# ============================================================================
+# CI/CD INTEGRATION
+# ============================================================================
+
+# --- Complete CI Command ---
+pytest -v --html=test_results/report.html --self-contained-html --junitxml=test_results/junit.xml
+
+# --- With Coverage (requires pytest-cov) ---
+pytest --cov=pages --cov=utils --cov-report=html --cov-report=term
+
+# --- Headless for CI ---
+pytest --browser=chrome --headless -v --html=report.html --self-contained-html
+
+# ============================================================================
+# USEFUL COMBINATIONS
+# ============================================================================
+
+# Complete test run with report
+pytest -v --html=test_results/report.html --self-contained-html --log-file=test_results/test.log
+
+# Smoke tests only (quick validation)
+pytest -m smoke -v --html=test_results/smoke_report.html --self-contained-html
+
+# Cross-browser regression
+pytest -m "regression and cross_browser" -v
+
+# Data-driven tests with detailed output
+pytest -m data_driven -v -s
+
+# E2E with screenshots on failure (automatic)
+pytest -m e2e -v
+
+# All tests excluding slow ones
+pytest -m "not slow" -v
+
+# ============================================================================
+# TROUBLESHOOTING
+# ============================================================================
+
+# Clear pytest cache
+pytest --cache-clear
+
+# Show available markers
+pytest --markers
+
+# Show available fixtures
+pytest --fixtures
+
+# Collect tests without running
+pytest --collect-only
+
+# Show test durations
+pytest --durations=10                 # Show 10 slowest tests
+
+# ============================================================================
+# VIEWING RESULTS
+# ============================================================================
+
+# Open HTML report (Windows)
+start test_results\report.html
+
+# View log file
+Get-Content test_results\test_execution.log
+
+# View screenshot
+start test_results\screenshots\test_name.png
+
+# ============================================================================
+# FRAMEWORK VALIDATION
+# ============================================================================
+
+# Verify all imports work
+python -c "from pages import *; from utils import *; print('All imports successful!')"
+
+# Check test discovery
+pytest --collect-only tests/
+
+# Validate test data
+python -c "from utils.ExcelUtility import ExcelUtility; print(ExcelUtility.read_csv('test_data/login_credentials.csv'))"
+
+# ============================================================================
+# MAINTENANCE
+# ============================================================================
+
+# Update dependencies
+python -m pip install --upgrade selenium pytest pytest-html webdriver-manager
+
+# Check outdated packages
+python -m pip list --outdated
+
+# Reinstall requirements
+python -m pip install -r requirements.txt --force-reinstall
+
+# ============================================================================
+# NOTES
+# ============================================================================
+
+# - Always run from project root directory
+# - Ensure website files are accessible
+# - Chrome/Firefox must be installed for cross-browser tests
+# - Screenshots saved automatically on test failure
+# - HTML report includes all test results and timing
+# - Use -v flag for better visibility during test execution
+
+# ============================================================================
