@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Tienda</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Iniciar sesión</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Ingresar</button>
+            </form>
+            <a href="#" id="forgotLink">¿Olvidaste tu contraseña?</a>
+            <div id="loginMessage"></div>
+        </section>
+        <section>
+            <div class="user-demo-box">
+                <h3>Usuarios de prueba</h3>
+                <ul id="userList"></ul>
+            </div>
+        </section>
+    </main>
+    <script>
+    // Usuarios demo
+    const users = [
+        { username: 'admin', password: 'admin123' },
+        { username: 'user1', password: 'clave1' },
+        { username: 'user2', password: 'clave2' }
+    ];
+
+    // Mostrar usuarios en la página
+    const userList = document.getElementById('userList');
+    users.forEach(u => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="user-icon">👤</span> <strong>${u.username}</strong> <span class="key-icon">🔑</span> <span class="password">${u.password}</span>`;
+        userList.appendChild(li);
+    });
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const user = users.find(u => u.username === username && u.password === password);
+        const msg = document.getElementById('loginMessage');
+        if (user) {
+            msg.textContent = `¡Bienvenido, ${username}! Redirigiendo...`;
+            msg.style.color = 'green';
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1200);
+        } else {
+            msg.textContent = 'Usuario o contraseña incorrectos.';
+            msg.style.color = 'red';
+        }
+    });
+
+    // Olvidé mi contraseña
+    document.getElementById('forgotLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        const username = prompt('Ingresa tu usuario:');
+        const user = users.find(u => u.username === username);
+        const msg = document.getElementById('loginMessage');
+        if (user) {
+            msg.textContent = `Tu contraseña es: ${user.password}`;
+            msg.style.color = 'blue';
+        } else {
+            msg.textContent = 'Usuario no encontrado.';
+            msg.style.color = 'orange';
+        }
+    });
+    </script>
+</body>
+</html>
