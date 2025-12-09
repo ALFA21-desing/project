@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jewelry obelisco</title> 
+  <link rel="icon" href="assets/LO.ico" /> <!-- Favicon icon for the browser tab -->
+  <link rel="stylesheet" href="style.css" /> 
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+ 
+  <div class="social-icons">
+    <a href="https://api.whatsapp.com/send?phone=573022628836&text=Hola" target="_blank" class="icon whatsapp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
+    </a>
+    <a href="https://www.instagram.com/joyeriaobelisco" target="_blank" class="icon instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+  </div>
+
+  <header>
+    <div class="top-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
+        <h1>OBELISCO</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <input type="search" placeholder="Buscar" />
+        <a href="#" style="color:var(--text);text-decoration:none;margin-right:8px">Login</a>
+        <a href="cart.html" style="color:var(--text);text-decoration:none">Cart (<span id="cart-count">0</span>)</a>
+        <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+      </div>
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="catalogo.html">Catalog</a></li>
+        <li><a href="detalle.html">Details</a></li>
+        <li><a href="contacto.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h2>Jewelry obelisco — new colleccion </h2>
+      <p>Edición limitada · Diseño responsable · Envíos a todo el país</p>
+      <a class="btn primary" href="catalogo.html">Comprar ahora</a>
+    </div>
+  </section>
+
+  <main>
+
+
+    <!-- Features section showcasing main services -->
+    <section class="products-grid">
+      <div class="product-card">
+        <img src="assets/cadenas-cruz.jpg" alt="Cadena Cruz">
+        <div class="product-info">
+          <p class="product-title">Cadena Cruz</p>
+          <p class="product-price">$120</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="assets/anillos-diamante.jpg" alt="Anillo Diamante">
+        <div class="product-info">
+          <p class="product-title">Anillo Diamante</p>
+          <p class="product-price">$320</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="assets/pulso-tennis.jpg" alt="Pulsera Tennis">
+        <div class="product-info">
+          <p class="product-title">Pulsera Tennis</p>
+          <p class="product-price">$220</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="assets/anillos-hombre.jpg" alt="Anillo Hombre">
+        <div class="product-info">
+          <p class="product-title">Anillo Hombre</p>
+          <p class="product-price">$180</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sidebar section for news or updates -->
+    <aside>
+      <h3>News</h3>
+      <p>Our new projects in Cartagena are underway.</p>
+    </aside>
+  </main>
+
+  <!-- Footer containing copyright and embedded Google Maps -->
+  <footer>
+    <div class="footer-content">
+      <p class="p1">© JEWELRY OBELISCO. All rights reserved.</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.974119693479!2d-75.54937182535005!3d10.423628289704464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef62f9e40f7f743%3A0x2cfb39df89af56c6!2sJoyeria%20El%20Obelisco!5e0!3m2!1ses-419!2sca!4v1765071305939!5m2!1ses-419!2sca" 
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    </div>
+  </footer>
+
+  <!-- JavaScript to toggle the navigation menu visibility on smaller screens -->
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+  </script>
+  <script src="cart.js"></script>
+</body>
+</html>
