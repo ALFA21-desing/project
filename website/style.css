@@ -216,7 +216,7 @@ main {
 .product-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
 .product-card img{width:100%;height:260px;object-fit:cover;display:block}
 .product-info{padding:12px}
-.product-title{font-weight:700;margin:0 0 6px;font-size:1rem}
+.product-title{font-weight:700;margin:0 0 6px;font-size:1rem;color:#fff}
 .product-price{color:var(--muted);font-weight:600}
 .product-actions{display:flex;gap:8px;margin-top:10px}
 .product-actions .btn{padding:8px 12px;font-size:0.9rem}
