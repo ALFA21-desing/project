@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order History - Jewelry obelisco</title>
+  <link rel="icon" href="assets/LO.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .order-history-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .filter-section {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.03);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .filter-section label {
+      display: inline-block;
+      margin-right: 15px;
+      color: var(--text);
+    }
+    .filter-section input, .filter-section select {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.3);
+      color: var(--text);
+      margin-right: 15px;
+    }
+    .order-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .order-table th {
+      background: rgba(202,164,66,0.1);
+      color: var(--text);
+      padding: 15px;
+      text-align: left;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+    .order-table th:hover {
+      background: rgba(202,164,66,0.15);
+    }
+    .order-table th::after {
+      content: '⇅';
+      position: absolute;
+      right: 10px;
+      opacity: 0.3;
+    }
+    .order-table th.sort-asc::after {
+      content: '↑';
+      opacity: 1;
+      color: var(--accent);
+    }
+    .order-table th.sort-desc::after {
+      content: '↓';
+      opacity: 1;
+      color: var(--accent);
+    }
+    .order-table td {
+      padding: 15px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      color: var(--text);
+    }
+    .order-table tr:hover {
+      background: rgba(255,255,255,0.02);
+    }
+    .order-id {
+      font-family: monospace;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .order-status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .status-completed {
+      background: rgba(74, 222, 128, 0.2);
+      color: #4ade80;
+    }
+    .status-pending {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fbbf24;
+    }
+    .status-processing {
+      background: rgba(96, 165, 250, 0.2);
+      color: #60a5fa;
+    }
+    .btn-view {
+      padding: 6px 12px;
+      background: var(--accent);
+      color: #111;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .btn-view:hover {
+      background: var(--accent-dark);
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+    .pagination button {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pagination button:hover:not(:disabled) {
+      background: rgba(202,164,66,0.2);
+      border-color: var(--accent);
+    }
+    .pagination button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .pagination button.active {
+      background: var(--accent);
+      color: #111;
+      font-weight: 700;
+    }
+    .no-orders {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
+        <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">OBELISCO</a></h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
+        <a href="register.html" style="color:var(--text);text-decoration:none;margin-right:8px">Register</a>
+        <a href="login.html" style="color:var(--text);text-decoration:none;margin-right:8px">Login</a>
+        <a href="cart.html" style="color:var(--text);text-decoration:none">Cart (<span id="cart-count">0</span>)</a>
+      </div>
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalog</a></li>
+        <li><a href="order-history.html" class="active">Orders</a></li>
+        <li><a href="contacto.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="order-history-container">
+    <h2>Order History</h2>
+    
+    <div class="filter-section">
+      <label>
+        Search: <input type="text" id="search-orders" placeholder="Order ID, name, email...">
+      </label>
+      <label>
+        Status: 
+        <select id="filter-status">
+          <option value="">All</option>
+          <option value="completed">Completed</option>
+          <option value="processing">Processing</option>
+          <option value="pending">Pending</option>
+        </select>
+      </label>
+      <label>
+        Show: 
+        <select id="items-per-page">
+          <option value="5">5 per page</option>
+          <option value="10" selected>10 per page</option>
+          <option value="25">25 per page</option>
+          <option value="50">50 per page</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="table-container">
+      <table class="order-table">
+        <thead>
+          <tr>
+            <th data-sort="orderId">Order ID</th>
+            <th data-sort="orderDate">Date</th>
+            <th data-sort="name">Customer</th>
+            <th data-sort="total">Total</th>
+            <th data-sort="status">Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="order-table-body">
+        </tbody>
+      </table>
+    </div>
+
+    <div id="no-orders-message" class="no-orders" style="display:none">
+      <h3>No Orders Found</h3>
+      <p>You haven't placed any orders yet.</p>
+      <a href="catalogo.html" class="btn primary">Start Shopping</a>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p class="p1">© JEWELRY OBELISCO. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="cart.js"></script>
+  <script>
+    let allOrders = [];
+    let filteredOrders = [];
+    let currentPage = 1;
+    let itemsPerPage = 10;
+    let currentSort = { column: 'orderDate', direction: 'desc' };
+
+    // Load orders from localStorage
+    function loadOrders() {
+      allOrders = JSON.parse(localStorage.getItem('order_history') || '[]');
+      
+      // Add random status for demo purposes
+      allOrders = allOrders.map(order => {
+        if (!order.status) {
+          const statuses = ['completed', 'processing', 'pending'];
+          order.status = statuses[Math.floor(Math.random() * statuses.length)];
+        }
+        return order;
+      });
+      
+      filteredOrders = [...allOrders];
+      renderTable();
+    }
+
+    // Sort functionality
+    function sortOrders(column) {
+      if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.column = column;
+        currentSort.direction = 'asc';
+      }
+
+      filteredOrders.sort((a, b) => {
+        let aVal = a[column];
+        let bVal = b[column];
+
+        // Handle date sorting
+        if (column === 'orderDate') {
+          aVal = new Date(aVal);
+          bVal = new Date(bVal);
+        }
+
+        // Handle total sorting
+        if (column === 'total') {
+          aVal = parseFloat(aVal.replace(/[^0-9.]/g, ''));
+          bVal = parseFloat(bVal.replace(/[^0-9.]/g, ''));
+        }
+
+        if (currentSort.direction === 'asc') {
+          return aVal > bVal ? 1 : -1;
+        } else {
+          return aVal < bVal ? 1 : -1;
+        }
+      });
+
+      updateSortIndicators();
+      renderTable();
+    }
+
+    function updateSortIndicators() {
+      document.querySelectorAll('.order-table th').forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+        if (th.dataset.sort === currentSort.column) {
+          th.classList.add('sort-' + currentSort.direction);
+        }
+      });
+    }
+
+    // Filter functionality
+    function applyFilters() {
+      const searchTerm = document.getElementById('search-orders').value.toLowerCase();
+      const statusFilter = document.getElementById('filter-status').value;
+
+      filteredOrders = allOrders.filter(order => {
+        const matchesSearch = !searchTerm || 
+          order.orderId.toLowerCase().includes(searchTerm) ||
+          order.name.toLowerCase().includes(searchTerm) ||
+          order.email.toLowerCase().includes(searchTerm);
+
+        const matchesStatus = !statusFilter || order.status === statusFilter;
+
+        return matchesSearch && matchesStatus;
+      });
+
+      currentPage = 1;
+      renderTable();
+    }
+
+    // Render table
+    function renderTable() {
+      const tbody = document.getElementById('order-table-body');
+      const noOrdersMsg = document.getElementById('no-orders-message');
+      const tableContainer = document.getElementById('table-container');
+
+      if (filteredOrders.length === 0) {
+        tableContainer.style.display = 'none';
+        noOrdersMsg.style.display = 'block';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
+
+      tableContainer.style.display = 'block';
+      noOrdersMsg.style.display = 'none';
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const pageOrders = filteredOrders.slice(startIndex, endIndex);
+
+      tbody.innerHTML = '';
+      pageOrders.forEach(order => {
+        const date = new Date(order.orderDate).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><span class="order-id">${order.orderId}</span></td>
+          <td>${date}</td>
+          <td>${order.name}<br><small style="color:var(--muted)">${order.email}</small></td>
+          <td style="font-weight:600">${order.total}</td>
+          <td><span class="order-status status-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></td>
+          <td><button class="btn-view" onclick="viewOrder('${order.orderId}')">View</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      renderPagination();
+    }
+
+    // Pagination
+    function renderPagination() {
+      const pagination = document.getElementById('pagination');
+      const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+
+      if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+      }
+
+      let html = '<button onclick="changePage(' + (currentPage - 1) + ')" ' + 
+                 (currentPage === 1 ? 'disabled' : '') + '>Previous</button>';
+
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          html += '<button onclick="changePage(' + i + ')" class="' + 
+                  (i === currentPage ? 'active' : '') + '">' + i + '</button>';
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          html += '<span style="color:var(--muted)">...</span>';
+        }
+      }
+
+      html += '<button onclick="changePage(' + (currentPage + 1) + ')" ' + 
+              (currentPage === totalPages ? 'disabled' : '') + '>Next</button>';
+
+      pagination.innerHTML = html;
+    }
+
+    window.changePage = function(page) {
+      const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderTable();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    };
+
+    window.viewOrder = function(orderId) {
+      const order = allOrders.find(o => o.orderId === orderId);
+      if (!order) return;
+
+      let itemsList = '<ul style="list-style:none;padding:0">';
+      order.cart.forEach(item => {
+        itemsList += `<li style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+          ${item.title} × ${item.qty} - $${((item.price||0) * (item.qty||1)).toFixed(2)}
+        </li>`;
+      });
+      itemsList += '</ul>';
+
+      const message = `
+        <p><strong>Order ID:</strong> ${order.orderId}</p>
+        <p><strong>Date:</strong> ${new Date(order.orderDate).toLocaleString()}</p>
+        <p><strong>Customer:</strong> ${order.name}</p>
+        <p><strong>Email:</strong> ${order.email}</p>
+        <p><strong>Address:</strong> ${order.address}, ${order.city}, ${order.zip}</p>
+        <p><strong>Status:</strong> <span class="order-status status-${order.status}">${order.status}</span></p>
+        <h4 style="margin-top:20px">Order Items:</h4>
+        ${itemsList}
+        <p style="font-size:1.2rem;font-weight:700;color:var(--accent);margin-top:15px">Total: ${order.total}</p>
+      `;
+
+      showModal('Order Details', message, null, false);
+    };
+
+    // Event listeners
+    document.getElementById('search-orders').addEventListener('input', applyFilters);
+    document.getElementById('filter-status').addEventListener('change', applyFilters);
+    document.getElementById('items-per-page').addEventListener('change', function() {
+      itemsPerPage = parseInt(this.value);
+      currentPage = 1;
+      renderTable();
+    });
+
+    document.querySelectorAll('.order-table th[data-sort]').forEach(th => {
+      th.addEventListener('click', () => sortOrders(th.dataset.sort));
+    });
+
+    // Real-time date & time
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+      const dateTimeEl = document.getElementById('datetime-display');
+      if (dateTimeEl) {
+        dateTimeEl.textContent = now.toLocaleDateString('en-US', options);
+      }
+    }
+    
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // Initialize
+    loadOrders();
+  </script>
+</body>
+</html>

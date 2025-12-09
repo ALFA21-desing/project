@@ -21,8 +21,10 @@
         <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">OBELISCO</a></h1>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
+        <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
         <input type="search" id="search-input" placeholder="Search" />
-        <a href="login.html" style="color:var(--text);text-decoration:none;margin-right:8px">login<a href="login.html" class="nav-link"></a>
+        <a href="register.html" style="color:var(--text);text-decoration:none;margin-right:8px">Register</a>
+        <a href="login.html" style="color:var(--text);text-decoration:none;margin-right:8px">Login</a>
         <a href="cart.html" style="color:var(--text);text-decoration:none">Cart (<span id="cart-count">0</span>)</a>
         <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
       </div>
@@ -31,6 +33,7 @@
       <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="catalogo.html">Catalog</a></li>
+        <li><a href="register.html">Register</a></li>
         <li><a href="detalle.html">Details</a></li>
         <li><a href="contacto.html">Contact</a></li>
       </ul>
@@ -139,6 +142,27 @@
         });
       });
     }
+
+    // Real-time date & time display
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+      const dateTimeEl = document.getElementById('datetime-display');
+      if (dateTimeEl) {
+        dateTimeEl.textContent = now.toLocaleDateString('en-US', options);
+      }
+    }
+    
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
   <script src="cart.js"></script>
 </body>

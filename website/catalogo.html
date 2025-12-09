@@ -24,7 +24,9 @@
    <div class="top-header">
       <img src="assets/LO.ico" alt="Logo obelisco" class="logo" /> <!-- Company logo image -->
       <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">Jewelry obelisco</a></h1> <!-- Company name -->
+      <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
       <input type="search" id="search-input" placeholder="Search..." /> <!-- Search input field -->
+      <a href="register.html" style="color:var(--text);text-decoration:none;margin-left:8px">Register</a>
       <a href="cart.html" style="color:var(--text);text-decoration:none;margin-left:8px">Cart (<span id="cart-count">0</span>)</a>
       <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button> <!-- Hamburger menu button for mobile -->
     </div>
@@ -34,6 +36,7 @@
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="catalogo.html" class="active">Catalog</a></li>
+        <li><a href="register.html">Register</a></li>
         <li><a href="detalle.html">Details</a></li>
         <li><a href="contacto.html">Contact</a></li>
       </ul>
@@ -47,6 +50,55 @@
       <a class="btn primary" href="catalogo.html">View Products</a>
     </div>
   </section>
+
+  <!-- Advanced Filter Section -->
+  <div style="max-width:1400px;margin:20px auto;padding:0 20px">
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:20px;border-radius:8px;margin-bottom:20px">
+      <h3 style="margin-top:0;color:var(--text)">Filter Products</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px">
+        <div>
+          <label style="display:block;margin-bottom:5px;color:var(--text);font-weight:600">Category</label>
+          <select id="filter-category" style="width:100%;padding:10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3);color:var(--text)">
+            <option value="">All Categories</option>
+            <option value="rings">Rings</option>
+            <option value="chains">Chains</option>
+            <option value="bracelets">Bracelets</option>
+            <option value="bangles">Bangles</option>
+          </select>
+        </div>
+        
+        <div>
+          <label style="display:block;margin-bottom:5px;color:var(--text);font-weight:600">Subcategory</label>
+          <select id="filter-subcategory" style="width:100%;padding:10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3);color:var(--text)" disabled>
+            <option value="">Select category first</option>
+          </select>
+        </div>
+        
+        <div>
+          <label style="display:block;margin-bottom:5px;color:var(--text);font-weight:600">Price Range</label>
+          <select id="filter-price" style="width:100%;padding:10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3);color:var(--text)">
+            <option value="">All Prices</option>
+            <option value="0-100">$0 - $100</option>
+            <option value="100-200">$100 - $200</option>
+            <option value="200-300">$200 - $300</option>
+            <option value="300+">$300+</option>
+          </select>
+        </div>
+        
+        <div>
+          <label style="display:block;margin-bottom:5px;color:var(--text);font-weight:600">Sort By</label>
+          <select id="filter-sort" style="width:100%;padding:10px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(0,0,0,0.3);color:var(--text)">
+            <option value="">Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
+            <option value="name-desc">Name: Z to A</option>
+          </select>
+        </div>
+      </div>
+      <button onclick="resetFilters()" class="btn" style="margin-top:15px">Reset Filters</button>
+    </div>
+  </div>
 
   <!-- Clean products grid -->
   <main>
@@ -242,5 +294,165 @@
         });
       });
     }
+
+    // Real-time date & time display
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+      const dateTimeEl = document.getElementById('datetime-display');
+      if (dateTimeEl) {
+        dateTimeEl.textContent = now.toLocaleDateString('en-US', options);
+      }
+    }
+    
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // Dependent dropdown filter system
+    const subcategoryOptions = {
+      rings: [
+        { value: 'diamond', label: 'Diamond Rings' },
+        { value: 'emerald', label: 'Emerald Rings' },
+        { value: 'mens', label: "Men's Rings" },
+        { value: 'classic', label: 'Classic Rings' }
+      ],
+      chains: [
+        { value: 'cross', label: 'Cross Chains' },
+        { value: 'clover', label: 'Clover Chains' },
+        { value: 'classic', label: 'Classic Chains' }
+      ],
+      bracelets: [
+        { value: 'woven', label: 'Woven Bracelets' },
+        { value: 'tennis', label: 'Tennis Bracelets' },
+        { value: 'classic', label: 'Classic Bracelets' }
+      ],
+      bangles: [
+        { value: 'thick', label: 'Thick Bangles' },
+        { value: 'thin', label: 'Thin Bangles' },
+        { value: 'decorative', label: 'Decorative Bangles' }
+      ]
+    };
+
+    const categoryFilter = document.getElementById('filter-category');
+    const subcategoryFilter = document.getElementById('filter-subcategory');
+    const priceFilter = document.getElementById('filter-price');
+    const sortFilter = document.getElementById('filter-sort');
+
+    // Update subcategory dropdown based on category selection
+    categoryFilter.addEventListener('change', function() {
+      const category = this.value;
+      subcategoryFilter.innerHTML = '<option value="">All Subcategories</option>';
+      
+      if (category && subcategoryOptions[category]) {
+        subcategoryFilter.disabled = false;
+        subcategoryOptions[category].forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt.value;
+          option.textContent = opt.label;
+          subcategoryFilter.appendChild(option);
+        });
+      } else {
+        subcategoryFilter.disabled = true;
+        subcategoryFilter.innerHTML = '<option value="">Select category first</option>';
+      }
+      
+      applyProductFilters();
+    });
+
+    subcategoryFilter.addEventListener('change', applyProductFilters);
+    priceFilter.addEventListener('change', applyProductFilters);
+    sortFilter.addEventListener('change', applyProductFilters);
+
+    function applyProductFilters() {
+      const category = categoryFilter.value;
+      const subcategory = subcategoryFilter.value;
+      const priceRange = priceFilter.value;
+      const sort = sortFilter.value;
+      
+      const productCards = Array.from(document.querySelectorAll('.product-card'));
+      
+      // Filter products
+      productCards.forEach(card => {
+        const title = card.querySelector('.product-title').textContent.toLowerCase();
+        const priceText = card.querySelector('.product-price').textContent;
+        const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+        
+        let showCard = true;
+        
+        // Category filter
+        if (category) {
+          const categoryMatch = {
+            'rings': /ring/i,
+            'chains': /chain/i,
+            'bracelets': /bracelet/i,
+            'bangles': /bangle/i
+          };
+          showCard = showCard && categoryMatch[category].test(title);
+        }
+        
+        // Subcategory filter
+        if (subcategory && showCard) {
+          showCard = title.includes(subcategory);
+        }
+        
+        // Price filter
+        if (priceRange && showCard) {
+          if (priceRange === '0-100') {
+            showCard = price <= 100;
+          } else if (priceRange === '100-200') {
+            showCard = price > 100 && price <= 200;
+          } else if (priceRange === '200-300') {
+            showCard = price > 200 && price <= 300;
+          } else if (priceRange === '300+') {
+            showCard = price > 300;
+          }
+        }
+        
+        card.style.display = showCard ? '' : 'none';
+      });
+      
+      // Sort products
+      if (sort) {
+        const grid = document.querySelector('.products-grid');
+        const visibleCards = productCards.filter(card => card.style.display !== 'none');
+        
+        visibleCards.sort((a, b) => {
+          if (sort.startsWith('price')) {
+            const priceA = parseFloat(a.querySelector('.product-price').textContent.replace(/[^0-9.]/g, ''));
+            const priceB = parseFloat(b.querySelector('.product-price').textContent.replace(/[^0-9.]/g, ''));
+            return sort === 'price-asc' ? priceA - priceB : priceB - priceA;
+          } else if (sort.startsWith('name')) {
+            const nameA = a.querySelector('.product-title').textContent;
+            const nameB = b.querySelector('.product-title').textContent;
+            return sort === 'name-asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+          }
+          return 0;
+        });
+        
+        // Re-append sorted cards
+        visibleCards.forEach(card => grid.appendChild(card));
+      }
+    }
+
+    window.resetFilters = function() {
+      categoryFilter.value = '';
+      subcategoryFilter.value = '';
+      subcategoryFilter.disabled = true;
+      subcategoryFilter.innerHTML = '<option value="">Select category first</option>';
+      priceFilter.value = '';
+      sortFilter.value = '';
+      
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.style.display = '';
+      });
+    };
   </script>
 
