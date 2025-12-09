@@ -20,20 +20,23 @@
 
   <header>
    <div class="top-header">
-      <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
-      <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">Jewelry obelisco</a></h1>
-      <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
-      <input type="search" id="search-input" placeholder="Search..." />
-      <a href="register.html" style="color:var(--text);text-decoration:none;margin-left:8px">Register</a>
-      <a href="cart.html" style="color:var(--text);text-decoration:none;margin-left:8px">Cart (<span id="cart-count">0</span>)</a>
-      <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
+        <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">Jewelry obelisco</a></h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
+        <input type="search" id="search-input" placeholder="Search" />
+        <a href="register.html" style="color:var(--text);text-decoration:none;margin-right:8px">Register</a>
+        <a href="cart.html" style="color:var(--text);text-decoration:none">Cart (<span id="cart-count">0</span>)</a>
+        <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+      </div>
     </div>
     
     <nav>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="catalogo.html" class="active">Catalog</a></li>
-        <li><a href="register.html">Register</a></li>
         <li><a href="detalle.html">Details</a></li>
         <li><a href="contacto.html">Contact</a></li>
       </ul>
