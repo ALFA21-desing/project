@@ -58,58 +58,125 @@
       <form id="checkout-form" style="max-width:650px">
         <!-- Step 1: Shipping Information -->
         <div class="checkout-step" data-step="1">
-          <h4>Shipping Information</h4>
-          <label>Full Name * <input name="name" required></label>
-          <label>Email * <input name="email" type="email" required></label>
-          <label>Phone <input name="phone" type="tel"></label>
-          <label>Address Line 1 * <input name="address" required></label>
-          <label>Address Line 2 <input name="address2"></label>
+          <h4>📦 Shipping Information</h4>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <label>City * <input name="city" required></label>
-            <label>ZIP Code * <input name="zip" required></label>
+            <label>First Name *
+              <input id="first-name" name="firstName" required autocomplete="given-name">
+            </label>
+            <label>Last Name *
+              <input id="last-name" name="lastName" required autocomplete="family-name">
+            </label>
           </div>
-          <label>Country * 
-            <select name="country" required>
-              <option value="">Select Country</option>
-              <option value="us">United States</option>
-              <option value="ca">Canada</option>
-              <option value="uk">United Kingdom</option>
-              <option value="co">Colombia</option>
-              <option value="mx">Mexico</option>
-            </select>
+          <label>Email Address *
+            <input id="email" name="email" type="email" required autocomplete="email" placeholder="your@email.com">
           </label>
-          <button type="button" class="btn primary" onclick="nextStep(2)">Continue to Payment</button>
+          <label>Phone Number *
+            <input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="+1 (555) 000-0000">
+          </label>
+          <label>Street Address *
+            <input id="address" name="address" required autocomplete="street-address" placeholder="123 Main Street">
+          </label>
+          <label>Apartment, Suite, etc. (Optional)
+            <input id="address2" name="address2" autocomplete="address-line2" placeholder="Apt 4B">
+          </label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <label>City *
+              <input id="city" name="city" required autocomplete="address-level2">
+            </label>
+            <label>State/Province *
+              <input id="state" name="state" required autocomplete="address-level1">
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <label>ZIP/Postal Code *
+              <input id="zip" name="zip" required autocomplete="postal-code">
+            </label>
+            <label>Country *
+              <select id="country" name="country" required autocomplete="country">
+                <option value="">Select Country</option>
+                <option value="us">United States</option>
+                <option value="ca">Canada</option>
+                <option value="uk">United Kingdom</option>
+                <option value="co">Colombia</option>
+                <option value="mx">Mexico</option>
+                <option value="es">Spain</option>
+                <option value="fr">France</option>
+                <option value="de">Germany</option>
+              </select>
+            </label>
+          </div>
+          <button type="button" class="btn primary" onclick="goToPayment()" style="margin-top:10px">Continue to Payment →</button>
         </div>
 
         <!-- Step 2: Payment Information -->
         <div class="checkout-step" data-step="2" style="display:none">
-          <h4>Payment Information</h4>
-          <label>Card Number * <input name="cardNumber" type="text" placeholder="1234 5678 9012 3456" maxlength="19" required></label>
-          <label>Cardholder Name * <input name="cardName" required></label>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <label>Expiry Date * <input name="cardExpiry" placeholder="MM/YY" maxlength="5" required></label>
-            <label>CVV * <input name="cardCVV" type="text" placeholder="123" maxlength="4" required></label>
+          <h4>💳 Payment Information</h4>
+          <div class="card-preview" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);padding:20px;border-radius:12px;margin-bottom:20px;color:white;min-height:180px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.3)">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:30px">
+              <div style="font-size:12px;opacity:0.9">CREDIT CARD</div>
+              <div style="font-size:24px">💳</div>
+            </div>
+            <div id="card-number-display" style="font-size:22px;letter-spacing:3px;margin-bottom:20px;font-family:monospace">•••• •••• •••• ••••</div>
+            <div style="display:flex;justify-content:space-between;align-items:end">
+              <div>
+                <div style="font-size:10px;opacity:0.7;margin-bottom:4px">CARDHOLDER</div>
+                <div id="card-name-display" style="font-size:14px;text-transform:uppercase">YOUR NAME</div>
+              </div>
+              <div>
+                <div style="font-size:10px;opacity:0.7;margin-bottom:4px">EXPIRES</div>
+                <div id="card-expiry-display" style="font-size:14px">MM/YY</div>
+              </div>
+            </div>
           </div>
-          <label>Billing same as shipping? 
-            <input type="checkbox" name="sameBilling" checked style="width:auto;margin-left:8px">
+          
+          <label>Card Number *
+            <input id="card-number" name="cardNumber" type="text" placeholder="1234 5678 9012 3456" maxlength="19" required autocomplete="cc-number">
           </label>
-          <div style="display:flex;gap:12px;margin-top:20px">
-            <button type="button" class="btn" onclick="prevStep(1)">Back</button>
-            <button type="button" class="btn primary" onclick="nextStep(3)">Review Order</button>
+          <label>Cardholder Name *
+            <input id="card-name" name="cardName" required autocomplete="cc-name" placeholder="John Doe" style="text-transform:uppercase">
+          </label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <label>Expiry Date *
+              <input id="card-expiry" name="cardExpiry" placeholder="MM/YY" maxlength="5" required autocomplete="cc-exp">
+            </label>
+            <label>CVV *
+              <input id="card-cvv" name="cardCVV" type="password" placeholder="•••" maxlength="4" required autocomplete="cc-csc">
+            </label>
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;margin-top:16px;cursor:pointer">
+            <input type="checkbox" id="same-billing" name="sameBilling" checked style="width:auto">
+            <span>Billing address same as shipping</span>
+          </label>
+          <div style="display:flex;gap:12px;margin-top:24px">
+            <button type="button" class="btn" onclick="goToShipping()">← Back</button>
+            <button type="button" class="btn primary" onclick="goToReview()" style="flex:1">Review Order →</button>
           </div>
         </div>
 
         <!-- Step 3: Review Order -->
         <div class="checkout-step" data-step="3" style="display:none">
-          <h4>Review Your Order</h4>
-          <div id="order-review" style="background:rgba(255,255,255,0.02);padding:20px;border-radius:8px;margin-bottom:20px"></div>
-          <label style="display:flex;align-items:center;gap:8px">
-            <input type="checkbox" name="terms" required style="width:auto">
-            <span>I agree to the terms and conditions *</span>
+          <h4>✓ Review Your Order</h4>
+          
+          <div id="order-review" style="background:rgba(255,255,255,0.02);padding:24px;border-radius:12px;margin-bottom:20px;border:1px solid rgba(255,255,255,0.05)"></div>
+          
+          <div style="background:rgba(255,255,255,0.02);padding:20px;border-radius:8px;margin-bottom:20px;border:1px solid rgba(255,255,255,0.05)">
+            <h5 style="margin-top:0;color:#000;font-size:16px">📍 Shipping Address</h5>
+            <div id="shipping-summary" style="color:#000;line-height:1.6"></div>
+          </div>
+          
+          <div style="background:rgba(255,255,255,0.02);padding:20px;border-radius:8px;margin-bottom:20px;border:1px solid rgba(255,255,255,0.05)">
+            <h5 style="margin-top:0;color:#000;font-size:16px">💳 Payment Method</h5>
+            <div id="payment-summary" style="color:#000;line-height:1.6"></div>
+          </div>
+          
+          <label style="display:flex;align-items:start;gap:12px;cursor:pointer;padding:16px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid rgba(255,255,255,0.05);margin-bottom:20px;color:#000">
+            <input type="checkbox" id="terms" name="terms" required style="width:auto;margin-top:2px">
+            <span style="flex:1">I agree to the <a href="#" style="color:#667eea">terms and conditions</a> and <a href="#" style="color:#667eea">privacy policy</a> *</span>
           </label>
-          <div style="display:flex;gap:12px;margin-top:20px">
-            <button type="button" class="btn" onclick="prevStep(2)">Back</button>
-            <button type="submit" class="btn primary">Place Order</button>
+          
+          <div style="display:flex;gap:12px;margin-top:24px">
+            <button type="button" class="btn" onclick="goToPayment()">← Back</button>
+            <button type="submit" class="btn primary" style="flex:1;font-size:16px;padding:14px">🛒 Place Order</button>
           </div>
         </div>
       </form>
