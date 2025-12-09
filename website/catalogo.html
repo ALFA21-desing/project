@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jewelry obelisco</title> 
+  <link rel="icon" href="assets/LO.ico" /> <!-- Favicon icon for the browser tab -->
+  <link rel="stylesheet" href="style.css" /> 
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Social media icons section with links to WhatsApp and Instagram -->
+    <div class="social-icons">
+    <a href="https://api.whatsapp.com/send?phone=573022628836&text=Hola" target="_blank" class="icon whatsapp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
+    </a>
+    <a href="https://www.instagram.com/joyeriaobelisco?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="icon instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+  </div>
+
+  <!-- Header section including logo, company name, search bar and mobile menu toggle -->
+  <header>
+   <div class="top-header">
+      <img src="assets/LO.ico" alt="Logo obelisco" class="logo" /> <!-- Company logo image -->
+      <h1>Jewelry obelisco</h1> <!-- Company name -->
+      <input type="search" placeholder="Buscar..." /> <!-- Search input field -->
+      <a href="cart.html" style="color:var(--text);text-decoration:none;margin-left:8px">Cart (<span id="cart-count">0</span>)</a>
+      <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button> <!-- Hamburger menu button for mobile -->
+    </div>
+    
+    <!-- Navigation menu with links to main pages -->
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html" class="active">Catalog</a></li>
+        <li><a href="detalle.html">Details</a></li>
+        <li><a href="contacto.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h2>Catálogo · Jewelry obelisco</h2>
+      <p>Selecciona una categoría y descubre piezas únicas.</p>
+      <a class="btn primary" href="catalogo.html">Ver productos</a>
+    </div>
+  </section>
+
+  <!-- Clean products grid -->
+  <main>
+
+  <script src="cart.js"></script>
+    <section class="products-grid">
+      <div class="product-card">
+        <img src="assets/cadenas-cruz.jpg" alt="Cadenas Cruz">
+        <div class="product-info">
+          <p class="product-title">Cadenas Cruz</p>
+          <p class="product-price">$135</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/anillos-diamante.jpg" alt="Anillos Diamante">
+        <div class="product-info">
+          <p class="product-title">Anillos Diamante</p>
+          <p class="product-price">$320</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/anillos-esmeralda.jpg" alt="Anillos Esmeralda">
+        <div class="product-info">
+          <p class="product-title">Anillos Esmeralda</p>
+          <p class="product-price">$280</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/anillos-hombre.jpg" alt="Anillos Hombre">
+        <div class="product-info">
+          <p class="product-title">Anillos Hombre</p>
+          <p class="product-price">$180</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/anillos-l.jpg" alt="Anillos L">
+        <div class="product-info">
+          <p class="product-title">Anillos L</p>
+          <p class="product-price">$150</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/anillos-m.jpg" alt="Anillos M">
+        <div class="product-info">
+          <p class="product-title">Anillos M</p>
+          <p class="product-price">$140</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/cadena.jpg" alt="Cadena">
+        <div class="product-info">
+          <p class="product-title">Cadena</p>
+          <p class="product-price">$90</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/manillas-tejidas.jpg" alt="Manillas Tejidas">
+        <div class="product-info">
+          <p class="product-title">Manillas Tejidas</p>
+          <p class="product-price">$75</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#" data-add="true">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/manillas-p.jpg" alt="Manillas P">
+        <div class="product-info">
+          <p class="product-title">Manillas P</p>
+          <p class="product-price">$65</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/manillas.jpg" alt="Manillas">
+        <div class="product-info">
+          <p class="product-title">Manillas</p>
+          <p class="product-price">$70</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/pulso-tennis.jpg" alt="Pulso Tennis">
+        <div class="product-info">
+          <p class="product-title">Pulso Tennis</p>
+          <p class="product-price">$220</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/pulsos.jpg" alt="Pulsos">
+        <div class="product-info">
+          <p class="product-title">Pulsos</p>
+          <p class="product-price">$200</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/cadenas-trebol.jpg" alt="Cadenas Trebol">
+        <div class="product-info">
+          <p class="product-title">Cadenas Trébol</p>
+          <p class="product-price">$160</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="assets/anillos-diamante.png" alt="Anillos Diamante PNG">
+        <div class="product-info">
+          <p class="product-title">Anillos Diamante (var.)</p>
+          <p class="product-price">$330</p>
+          <div class="product-actions">
+            <a class="btn" href="detalle.html">Ver</a>
+            <a class="btn primary" href="#">Comprar</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>

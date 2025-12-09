@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Carrito — Obelisco</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="top-header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
+        <h1>OBELISCO</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="index.html" style="color:var(--text);text-decoration:none;margin-right:8px">Home</a>
+        <a href="catalogo.html" style="color:var(--text);text-decoration:none;margin-right:8px">Catalog</a>
+        <a href="contacto.html" style="color:var(--text);text-decoration:none">Contact</a>
+        <a href="cart.html" style="color:var(--text);text-decoration:none;margin-left:10px">Cart (<span id="cart-count">0</span>)</a>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width:1100px;margin:20px auto;padding:0 16px;">
+    <h2>Tu carrito</h2>
+    <div id="cart-items" style="margin-bottom:18px"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:16px">
+      <div>
+        <strong>Total:</strong> <span id="cart-total">$0.00</span>
+      </div>
+      <div>
+        <a href="catalogo.html" class="btn">Seguir comprando</a>
+      </div>
+    </div>
+
+    <section style="margin-top:24px">
+      <h3>Checkout</h3>
+      <div id="order-success"></div>
+      <form id="checkout-form" style="max-width:650px">
+        <label>Nombre completo <input name="name" required></label>
+        <label>Email <input name="email" type="email" required></label>
+        <label>Dirección <input name="address" required></label>
+        <button class="btn primary" type="submit">Enviar pedido</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="cart.js"></script>
+</body>
+</html>
