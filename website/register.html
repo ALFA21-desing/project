@@ -220,7 +220,6 @@
 
   <script src="cart.js"></script>
   <script>
-    // Real-time password validation with regex
     const passwordInput = document.getElementById('password');
     const passwordReqs = document.getElementById('password-reqs');
     
@@ -235,7 +234,6 @@
     passwordInput.addEventListener('input', function() {
       const password = this.value;
       
-      // Check each requirement
       document.getElementById('req-length').style.color = regexPatterns.length.test(password) ? '#4ade80' : '#f87171';
       document.getElementById('req-uppercase').style.color = regexPatterns.uppercase.test(password) ? '#4ade80' : '#f87171';
       document.getElementById('req-lowercase').style.color = regexPatterns.lowercase.test(password) ? '#4ade80' : '#f87171';
@@ -243,7 +241,6 @@
       document.getElementById('req-special').style.color = regexPatterns.special.test(password) ? '#4ade80' : '#f87171';
     });
 
-    // Form validation and submission
     document.getElementById('register-form').addEventListener('submit', function(e) {
       e.preventDefault();
       
@@ -362,7 +359,6 @@
       errorEl.style.display = 'block';
     }
 
-    // Real-time date & time display
     function updateDateTime() {
       const now = new Date();
       const options = { 

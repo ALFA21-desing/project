@@ -14,6 +14,7 @@
         <h1>OBELISCO</h1>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
+        <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
         <a href="index.html" style="color:var(--text);text-decoration:none;margin-right:8px">Home</a>
         <a href="catalogo.html" style="color:var(--text);text-decoration:none;margin-right:8px">Catalog</a>
         <a href="contacto.html" style="color:var(--text);text-decoration:none">Contact</a>
@@ -116,5 +117,23 @@
   </main>
 
   <script src="cart.js"></script>
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const dateTimeStr = now.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+      const elem = document.getElementById('datetime-display');
+      if (elem) elem.textContent = dateTimeStr;
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+  </script>
 </body>
 </html>

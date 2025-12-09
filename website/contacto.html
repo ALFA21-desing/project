@@ -4,12 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jewelry obelisco</title> 
-  <link rel="icon" href="assets/LO.ico" /> <!-- Favicon icon for the browser tab -->
+  <link rel="icon" href="assets/LO.ico" />
   <link rel="stylesheet" href="style.css" /> 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Social media icons linking to WhatsApp and Instagram -->
   <div class="social-icons">
     <a href="https://api.whatsapp.com/send?phone=573022628836&text=Hola" target="_blank" class="icon whatsapp">
       <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
@@ -19,14 +18,14 @@
     </a>
   </div>
 
-  <!-- Header with logo, company name, search box, and mobile menu button -->
   <header>
     <div class="top-header">
-      <img src="assets/LO.ico" alt="Logo obelisco" class="logo" /> <!-- Company logo image -->
-      <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">Jewelry obelisco</a></h1> <!-- Company name -->
-      <input type="search" placeholder="Search..." /> <!-- Search input field -->
+      <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
+      <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">Jewelry obelisco</a></h1>
+      <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
+      <input type="search" placeholder="Search..." />
       <a href="cart.html" style="color:var(--text);text-decoration:none;margin-left:8px">Cart (<span id="cart-count">0</span>)</a>
-      <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button> <!-- Hamburger menu button for mobile -->
+      <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
     </div>
     <nav>
       <ul class="nav-links">
@@ -95,6 +94,23 @@
     menuToggle.addEventListener('click', () => {
       nav.classList.toggle('active');
     });
+
+    function updateDateTime() {
+      const now = new Date();
+      const dateTimeStr = now.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+      const elem = document.getElementById('datetime-display');
+      if (elem) elem.textContent = dateTimeStr;
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
 </body>
 </html>

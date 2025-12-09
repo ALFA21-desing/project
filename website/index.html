@@ -4,16 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jewelry obelisco</title> 
-  <link rel="icon" href="assets/LO.ico" /> <!-- Favicon icon for the browser tab -->
+  <link rel="icon" href="assets/LO.ico" />
   <link rel="stylesheet" href="style.css" /> 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <header>
-      <nav class="main-nav">
-      </nav>
-    </header>
-    <main>
-      <!-- Aquí va el contenido original de la página principal -->
-    </main>
+</head>
+<body>
   <header>
     <div class="top-header">
       <div style="display:flex;align-items:center;gap:12px">
@@ -49,9 +44,6 @@
   </section>
 
   <main>
-
-
-    <!-- Features section showcasing main services -->
     <section class="products-grid">
       <div class="product-card">
         <img src="assets/cadenas-cruz.jpg" alt="Cross Chain">
@@ -99,14 +91,12 @@
       </div>
     </section>
 
-    <!-- Sidebar section for news or updates -->
     <aside>
       <h3>News</h3>
       <p>Our new projects in Cartagena are underway.</p>
     </aside>
   </main>
 
-  <!-- Footer containing copyright and embedded Google Maps -->
   <footer>
     <div class="footer-content">
       <p class="p1">© JEWELRY OBELISCO. All rights reserved.</p>
@@ -116,18 +106,16 @@
     </div>
   </footer>
 
-  <!-- JavaScript to toggle the navigation menu visibility on smaller screens -->
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
 
     menuToggle.addEventListener('click', () => {
       nav.classList.toggle('active');
+      nav.classList.toggle('active');
     });
 
-    // Search functionality
     const searchInput = document.getElementById('search-input');
-    if (searchInput) {
       searchInput.addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
         const productCards = document.querySelectorAll('.product-card');
@@ -141,11 +129,9 @@
           }
         });
       });
-    }
 
-    // Real-time date & time display
+
     function updateDateTime() {
-      const now = new Date();
       const options = { 
         weekday: 'short', 
         year: 'numeric', 

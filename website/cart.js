@@ -1,4 +1,3 @@
-// Cart functionality: store cart in localStorage and render cart page
 const CART_KEY = 'obelisco_cart_v1';
 
 function loadCart(){
@@ -67,7 +66,6 @@ function renderCart(){
     el.appendChild(row);
   });
   totalEl.textContent = '$'+total.toFixed(2);
-  // attach qty listeners
   el.querySelectorAll('input[data-title]').forEach(inp=>{
     inp.addEventListener('change', e=>{
       const t = e.target.dataset.title; const v = parseInt(e.target.value) || 1; changeQty(t, v);
@@ -84,13 +82,12 @@ function renderCart(){
       );
     });
   });
+  });
 }
 
-// Drag and Drop functionality
 let draggedElement = null;
 
 function handleDragStart(e) {
-  draggedElement = this;
   this.classList.add('dragging');
   e.dataTransfer.effectAllowed = 'move';
   e.dataTransfer.setData('text/html', this.innerHTML);
@@ -139,33 +136,26 @@ function handleDragLeave(e) {
 }
 
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g, ch=>({
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, ch=>({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[ch])); }
 
-// Delegated add-to-cart: look for .btn.primary clicks and read nearby product info
 document.addEventListener('click', function(e){
-  // Prefer explicit data attribute for add-to-cart buttons
   const addBtn = e.target.closest('[data-add]');
-  // Fallback: button with .btn.primary outside checkout form and not inside cart page
   const fallbackBtn = e.target.closest('.btn.primary');
-  const btn = addBtn || fallbackBtn;
   if(!btn) return;
   // If inside checkout form, do not intercept
+  const btn = addBtn || fallbackBtn;
+  if(!btn) return;
   if(btn.closest && btn.closest('#checkout-form')) return;
 
-  // If explicit opt-in required and present but set to false, skip
   if(addBtn && addBtn.dataset.add && addBtn.dataset.add.toLowerCase() === 'false') return;
 
-  // If we fell back to .btn.primary, ensure its text suggests purchase
   if(!addBtn){
-    if(!/comprar|agregar|add to cart|buy/i.test(btn.textContent)) return;
+  e.preventDefault();
   }
 
   e.preventDefault();
-  // try to find product info
   const card = btn.closest('.product-card') || btn.closest('.product-detail') || btn.closest('.product-info');
-  let title = '';
-  let price = 0;
-  if(card){
     const tEl = card.querySelector('.product-title') || document.querySelector('.product-meta h1');
     const pEl = card.querySelector('.product-price') || card.querySelector('.price');
     title = tEl ? tEl.textContent.trim() : (btn.dataset.title || 'Producto');
@@ -176,27 +166,22 @@ document.addEventListener('click', function(e){
   }
   addToCart({title, price, qty:1});
   // small feedback via toast
+    price = Number(btn.dataset.price)||0;
+  }
+  addToCart({title, price, qty:1});
   try{ showToast && showToast('Añadido al carrito: '+title); }catch(e){ console.log('Añadido al carrito', title); }
 });
 
-// If on cart page, render and handle checkout
 document.addEventListener('DOMContentLoaded', ()=>{
-  // If on cart page, render and handle checkout
   if(document.getElementById('cart-items')){
-    renderCart();
-    const form = document.getElementById('checkout-form');
-    if(form) {
-      // Multi-step navigation
       window.nextStep = function(step) {
         // Validate current step
         const currentStep = document.querySelector('.checkout-step[style*="display: block"], .checkout-step:not([style])');
-        const inputs = currentStep.querySelectorAll('input[required], select[required]');
-        let valid = true;
-        
-        inputs.forEach(input => {
-          if (!input.value.trim()) {
-            input.style.borderColor = '#f87171';
-            valid = false;
+    renderCart();
+    const form = document.getElementById('checkout-form');
+    if(form) {
+      window.nextStep = function(step) {
+        const currentStep = document.querySelector('.checkout-step[style*="display: block"], .checkout-step:not([style])');
           } else {
             input.style.borderColor = '';
           }
@@ -210,17 +195,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
         // Hide current step
         document.querySelectorAll('.checkout-step').forEach(s => s.style.display = 'none');
         
-        // Show next step
+          return;
+        }
+        
+        document.querySelectorAll('.checkout-step').forEach(s => s.style.display = 'none');
         document.querySelector(`.checkout-step[data-step="${step}"]`).style.display = 'block';
         
-        // Update progress indicators
         document.querySelectorAll('.step-indicator').forEach(ind => {
-          const indStep = parseInt(ind.dataset.step);
-          if (indStep < step) {
-            ind.classList.add('completed');
-            ind.classList.remove('active');
-          } else if (indStep === step) {
-            ind.classList.add('active');
             ind.classList.remove('completed');
           } else {
             ind.classList.remove('active', 'completed');
@@ -234,11 +215,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         
         window.scrollTo({top: 0, behavior: 'smooth'});
       };
-      
-      window.prevStep = function(step) {
-        document.querySelectorAll('.checkout-step').forEach(s => s.style.display = 'none');
-        document.querySelector(`.checkout-step[data-step="${step}"]`).style.display = 'block';
+          }
+        });
         
+        if (step === 3) {
         document.querySelectorAll('.step-indicator').forEach(ind => {
           const indStep = parseInt(ind.dataset.step);
           if (indStep < step) {
@@ -303,28 +283,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
         orders.push(order);
         localStorage.setItem('order_history', JSON.stringify(orders));
         
-        // Clear cart
+          total: document.getElementById('cart-total')?.textContent || '',
+          orderDate: new Date().toISOString()
+        };
+        
+        const orders = JSON.parse(localStorage.getItem('order_history') || '[]');
+        document.getElementById('checkout-form').style.display = 'none';
+        document.getElementById('checkout-progress').style.display = 'none';
+        orders.push(order);
+        localStorage.setItem('order_history', JSON.stringify(orders));
+        
         saveCart([]); 
         updateCartCount(); 
         renderCart();
         
-        // Hide checkout form and progress
         document.getElementById('checkout-form').style.display = 'none';
         document.getElementById('checkout-progress').style.display = 'none';
         
-        // Show success
         document.getElementById('order-success').innerHTML = `
-          <div style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);padding:30px;border-radius:8px;text-align:center">
-            <h3 style="color:#4ade80;margin-top:0">✓ Order Placed Successfully!</h3>
-            <p>Thank you, ${escapeHtml(order.name)}!</p>
-            <p>Order ID: <strong>${order.orderId}</strong></p>
-            <p>A confirmation email has been sent to ${escapeHtml(order.email)}</p>
-            <a href="order-history.html" class="btn primary" style="margin-top:15px;display:inline-block">View Order History</a>
-          </div>
-        `;
-      });
-    }
-  }
   // create toast container
   if(!document.getElementById('obelisco-toast')){
     const t = document.createElement('div'); t.id = 'obelisco-toast'; t.className = 'obelisco-toast'; document.body.appendChild(t);
@@ -333,25 +309,22 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 // Simple toast helper
 function showToast(msg, ms=1800){
-  const el = document.getElementById('obelisco-toast');
-  if(!el) return alert(msg);
-  el.textContent = msg; el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+      });
+    }
+  }
+  if(!document.getElementById('obelisco-toast')){
+
+// Modal Dialog System
+  }
+});
+
+function showToast(msg, ms=1800){s="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
   setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateY(10px)'; }, ms);
 }
 
-// Modal Dialog System
-function createModal() {
-  if (document.getElementById('obelisco-modal')) return;
-  
-  const modalHTML = `
-    <div id="obelisco-modal" class="modal-overlay">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="modal-title">Modal Title</h3>
-          <button class="modal-close" id="modal-close-btn">&times;</button>
-        </div>
-        <div class="modal-body" id="modal-body">Modal content goes here</div>
-        <div class="modal-footer" id="modal-footer">
+function createModal() {l-footer" id="modal-footer">
           <button class="btn" id="modal-cancel">Cancel</button>
           <button class="btn primary" id="modal-confirm">Confirm</button>
         </div>
@@ -370,11 +343,9 @@ function createModal() {
 }
 
 function showModal(title, message, confirmCallback, showCancel = true) {
-  createModal();
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
   
-  const modal = document.getElementById('obelisco-modal');
-  const modalTitle = document.getElementById('modal-title');
-  const modalBody = document.getElementById('modal-body');
+  document.getElementById('modal-close-btn').addEventListener('click', closeModal);
   const confirmBtn = document.getElementById('modal-confirm');
   const cancelBtn = document.getElementById('modal-cancel');
   
@@ -388,12 +359,11 @@ function showModal(title, message, confirmCallback, showCancel = true) {
   
   newConfirmBtn.addEventListener('click', function() {
     if (confirmCallback) confirmCallback();
-    closeModal();
-  });
+  modalTitle.textContent = title;
+  modalBody.innerHTML = message;
+  cancelBtn.style.display = showCancel ? 'block' : 'none';
   
-  modal.classList.add('active');
-}
-
+  const newConfirmBtn = confirmBtn.cloneNode(true);
 function closeModal() {
   const modal = document.getElementById('obelisco-modal');
   if (modal) modal.classList.remove('active');

@@ -193,7 +193,7 @@
     const userList = document.getElementById('userList');
     demoUsers.forEach(u => {
         const li = document.createElement('li');
-        li.innerHTML = `👤 <strong>${u.username}</strong> 🔑 ${u.password}`;
+        li.innerHTML = ` <strong>${u.username}</strong>   psswd:   ${u.password}`;
         userList.appendChild(li);
     });
 

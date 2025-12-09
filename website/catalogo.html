@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jewelry obelisco</title> 
-  <link rel="icon" href="assets/LO.ico" /> <!-- Favicon icon for the browser tab -->
+  <link rel="icon" href="assets/LO.ico" />
   <link rel="stylesheet" href="style.css" /> 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Social media icons section with links to WhatsApp and Instagram -->
-    <div class="social-icons">
+  <div class="social-icons">
     <a href="https://api.whatsapp.com/send?phone=573022628836&text=Hola" target="_blank" class="icon whatsapp">
       <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
     </a>
@@ -19,19 +18,17 @@
     </a>
   </div>
 
-  <!-- Header section including logo, company name, search bar and mobile menu toggle -->
   <header>
    <div class="top-header">
-      <img src="assets/LO.ico" alt="Logo obelisco" class="logo" /> <!-- Company logo image -->
-      <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">Jewelry obelisco</a></h1> <!-- Company name -->
+      <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
+      <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">Jewelry obelisco</a></h1>
       <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
-      <input type="search" id="search-input" placeholder="Search..." /> <!-- Search input field -->
+      <input type="search" id="search-input" placeholder="Search..." />
       <a href="register.html" style="color:var(--text);text-decoration:none;margin-left:8px">Register</a>
       <a href="cart.html" style="color:var(--text);text-decoration:none;margin-left:8px">Cart (<span id="cart-count">0</span>)</a>
-      <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button> <!-- Hamburger menu button for mobile -->
+      <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
     </div>
     
-    <!-- Navigation menu with links to main pages -->
     <nav>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
@@ -51,7 +48,6 @@
     </div>
   </section>
 
-  <!-- Advanced Filter Section -->
   <div style="max-width:1400px;margin:20px auto;padding:0 20px">
     <div style="background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:20px;border-radius:8px;margin-bottom:20px">
       <h3 style="margin-top:0;color:var(--text)">Filter Products</h3>
@@ -100,10 +96,7 @@
     </div>
   </div>
 
-  <!-- Clean products grid -->
   <main>
-
-  <script src="cart.js"></script>
     <section class="products-grid">
       <div class="product-card">
         <img src="assets/cadenas-cruz.jpg" alt="Cross Chains">
@@ -276,8 +269,8 @@
     </section>
   </main>
 
+  <script src="cart.js"></script>
   <script>
-    // Search functionality
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
@@ -295,7 +288,6 @@
       });
     }
 
-    // Real-time date & time display
     function updateDateTime() {
       const now = new Date();
       const options = { 
@@ -316,7 +308,6 @@
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
-    // Dependent dropdown filter system
     const subcategoryOptions = {
       rings: [
         { value: 'diamond', label: 'Diamond Rings' },
@@ -346,7 +337,6 @@
     const priceFilter = document.getElementById('filter-price');
     const sortFilter = document.getElementById('filter-sort');
 
-    // Update subcategory dropdown based on category selection
     categoryFilter.addEventListener('change', function() {
       const category = this.value;
       subcategoryFilter.innerHTML = '<option value="">All Subcategories</option>';
@@ -376,10 +366,8 @@
       const subcategory = subcategoryFilter.value;
       const priceRange = priceFilter.value;
       const sort = sortFilter.value;
-      
       const productCards = Array.from(document.querySelectorAll('.product-card'));
       
-      // Filter products
       productCards.forEach(card => {
         const title = card.querySelector('.product-title').textContent.toLowerCase();
         const priceText = card.querySelector('.product-price').textContent;
@@ -387,7 +375,6 @@
         
         let showCard = true;
         
-        // Category filter
         if (category) {
           const categoryMatch = {
             'rings': /ring/i,
@@ -398,12 +385,10 @@
           showCard = showCard && categoryMatch[category].test(title);
         }
         
-        // Subcategory filter
         if (subcategory && showCard) {
           showCard = title.includes(subcategory);
         }
         
-        // Price filter
         if (priceRange && showCard) {
           if (priceRange === '0-100') {
             showCard = price <= 100;
@@ -419,7 +404,6 @@
         card.style.display = showCard ? '' : 'none';
       });
       
-      // Sort products
       if (sort) {
         const grid = document.querySelector('.products-grid');
         const visibleCards = productCards.filter(card => card.style.display !== 'none');
@@ -437,7 +421,6 @@
           return 0;
         });
         
-        // Re-append sorted cards
         visibleCards.forEach(card => grid.appendChild(card));
       }
     }
@@ -455,4 +438,6 @@
       });
     };
   </script>
+</body>
+</html>
 
