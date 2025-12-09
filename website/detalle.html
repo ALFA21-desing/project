@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jewelry obelisco</title> 
+  <link rel="icon" href="assets/LO.ico" /> <!-- Favicon icon for the browser tab -->
+  <link rel="stylesheet" href="style.css" /> 
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Social media icons linking to WhatsApp and Instagram -->
+  <div class="social-icons">
+    <a href="https://api.whatsapp.com/send?phone=573022628836&text=Hola" target="_blank" class="icon whatsapp">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
+    </a>
+    <a href="https://www.instagram.com/joyeriaobelisco?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="icon instagram">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+    </a>
+  </div>
+
+  <!-- Header containing logo, company name, search box, and mobile menu button -->
+  <header>
+   <div class="top-header">
+      <img src="assets/LO.ico" alt="Logo obelisco" class="logo" /> <!-- Company logo image -->
+      <h1>Jewelry obelisco</h1> <!-- Company name -->
+      <input type="search" placeholder="Buscar..." /> <!-- Search input field -->
+      <a href="cart.html" style="color:var(--text);text-decoration:none;margin-left:8px">Cart (<span id="cart-count">0</span>)</a>
+      <button class="menu-toggle" aria-label="Toggle menu">&#9776;</button> <!-- Hamburger menu button for mobile -->
+    </div>
+    <!-- Navigation menu with links to other pages -->
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalog</a></li>
+        <li><a href="detalle.html" class="active">Details</a></li> 
+        <li><a href="contacto.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h2>Detalle · Housing Construction</h2>
+      <p>Información detallada del servicio y materiales.</p>
+      <a class="btn primary" href="catalogo.html">Ir al catálogo</a>
+    </div>
+  </section>
+
+  <main>
+    <section class="product-detail">
+      <div class="gallery">
+        <img id="main-image" src="assets/anillos-diamante.jpg" alt="gallery" style="border-radius:8px;margin-bottom:12px">
+        <div style="display:flex;gap:8px">
+          <img class="thumb" src="assets/anillos-esmeralda.jpg" alt="thumb1" style="width:80px;height:80px;object-fit:cover;border-radius:6px;cursor:pointer">
+          <img class="thumb" src="assets/cadenas-cruz.jpg" alt="thumb2" style="width:80px;height:80px;object-fit:cover;border-radius:6px;cursor:pointer">
+          <img class="thumb" src="assets/anillos-hombre.jpg" alt="thumb3" style="width:80px;height:80px;object-fit:cover;border-radius:6px;cursor:pointer">
+        </div>
+      </div>
+      <aside class="product-meta">
+        <h1>Cadena Cruz</h1>
+        <p class="price">$120</p>
+        <p class="muted">Edición limitada · Acero inoxidable y baño en oro</p>
+        <p style="margin-top:16px">Descripción corta del producto para enganchar al cliente.</p>
+        <div style="margin-top:18px">
+          <a class="btn primary" href="#" data-add="true">Agregar al carrito</a>
+          <a class="btn" href="#" style="margin-left:8px">Ver en tienda</a>
+        </div>
+      </aside>
+    </section>
+    <script>
+      // Simple thumbnail click -> main image swap
+      document.querySelectorAll('.thumb').forEach(t => t.addEventListener('click', e => {
+        document.getElementById('main-image').src = e.target.src;
+      }));
+    </script>
+  </main>
+
+  <!-- Footer with copyright and embedded Google Map -->
+  <footer>
+    <div class="footer-content">
+      <p class="p1">© JEWELRY OBELISCO. All rights reserved.</p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.974119693479!2d-75.54937182535005!3d10.423628289704464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef62f9e40f7f743%3A0x2cfb39df89af56c6!2sJoyeria%20El%20Obelisco!5e0!3m2!1ses-419!2sca!4v1765071305939!5m2!1ses-419!2sca" 
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    </div>
+  </footer>
+
+  
+  <script>
+   
+    const acc = document.querySelectorAll(".accordion");
+    acc.forEach(btn => {
+      btn.addEventListener("click", function () {
+       
+        this.classList.toggle("active");
+
+        
+        const panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null; 
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px"; 
+        }
+      });
+    });
+  </script>
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+  </script>
+  <script src="cart.js"></script>
+</body>
+</html>
