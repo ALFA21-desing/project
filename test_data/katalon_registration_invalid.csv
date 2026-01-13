@@ -1,0 +1,11 @@
+firstName,lastName,email,password,phone,address,expectedError
+,Smith,john.smith@example.com,Password123,555-1234,123 Main St,Missing first name
+Alice,,alice.no_last@example.com,Password123,555-2345,456 Oak Ave,Missing last name
+Bob,Lee,bob.lee@bademail,Password123,555-3456,789 Pine Rd,Invalid email format
+Carol,Jones,carol.jones@example.com,short,555-4567,101 Maple Ln,Password too short
+Eve,Turner,eve.turner@example.com,Password123,notaphone,202 Birch St,Invalid phone format
+Frank,O'Neil,frank.oneil@example.com,Password123,555-5678,,Missing address
+Grace,Hall,grace.hall@example.com,Password123,555-6789,303 Cedar Blvd,Valid but name includes special char expected warning
+Heidi,King,heidi.king@,Password123,555-7890,404 Elm St,Invalid email format
+Ivan,Perez,ivan.perez@example.com,Password123,555-8901,505 Spruce Dr,Invalid zipcode (if applicable)
+Judy,Long,judy.long@example.com,,555-9012,606 Walnut Ct,Missing password
