@@ -20,97 +20,117 @@ The repository contains:
 - `tests/` — PyTest test cases (authentication, shopping, e2e, cross-browser, iframe).
 - `utils/` — Utilities: `WebDriverFactory.py`, `WaitUtility.py`, `ExcelUtility.py`.
 - `test_data/` — `login_credentials.csv`, `login_credentials.xlsx`.
-- `requirements.txt` — Python dependencies.
-- `conftest.py`, `pytest.ini` — PyTest configuration.
-- Additional documentation: `QUICKSTART.md`, `TEST_FRAMEWORK_README.md`, `COMMANDS_REFERENCE.txt`, `FINAL_SUMMARY.txt`.
+# Proyecto: Tienda Web E2E + Framework de Pruebas
 
-## Environment requirements
+## Resumen profesional
+
+Este repositorio contiene una tienda web de ejemplo junto con un framework de pruebas E2E implementado con Selenium, pytest y un patrón Page Object Model (POM). El proyecto ha sido preparado y corregido para entrega académica: se arreglaron selectores rotos, se endurecieron utilidades de Excel/CSV, se creó un exportador a XLSX compatible con Katalon y se generó un reporte HTML autocontenido con los 28 casos de prueba seleccionados.
+
+## Contenido del repositorio
+
+- `website/` — Código del sitio (HTML, CSS, JS, assets).
+- `pages/` — Clases POM usadas por las pruebas.
+- `tests/` — Casos de prueba (pytest).
+- `utils/` — Utilidades (por ejemplo `ExcelUtility.py`, `WebDriverFactory.py`).
+- `scripts/` — Scripts auxiliares (por ejemplo `generate_katalon_xlsx.py`).
+- `test_results/` — Carpetas con reportes y archivos generados (HTML, XLSX).
+
+## Cambios principales realizados
+
+Para estabilizar el proyecto y dejarlo listo para entrega se aplicaron las siguientes correcciones:
+
+- `pages/CatalogPage.py`: corrección de selectores para coincidir con `website/catalogo.html`.
+- `pages/CartPage.py`: sincronización de selectores y adaptación del flujo de checkout para invocar funciones JS de la página cuando fue necesario.
+- `pages/ContactPage.py`: localizadores actualizados a IDs en español (`nombre`, `mensaje`) para resolver fallos en pruebas con iframes.
+- `utils/ExcelUtility.py`: robustecimiento en la lectura/escritura de Excel/CSV.
+- `scripts/generate_katalon_xlsx.py`: nuevo script para exportar la lista de pruebas seleccionadas a un XLSX para Katalon; ahora limita la exportación a 28 pruebas curadas.
+
+## Archivos front-end validados
+
+- `website/catalogo.html`
+- `website/cart.html` y `website/cart.js`
+- `website/contacto.html`
+
+## Requisitos y dependencias
 
 - Python 3.12+
-- Browsers: Google Chrome, Mozilla Firefox
-- Dependencies (see `requirements.txt`):
-	- selenium==3.141.0
-	- pytest==9.0.2
-	- webdriver-manager
-	- openpyxl
-	- pytest-html
+- Navegadores soportados: Google Chrome, Mozilla Firefox
+- Dependencias Python (instalar con pip): `selenium`, `webdriver-manager`, `pytest`, `pytest-html`, `openpyxl`.
 
-Quick install:
+Instalación rápida (PowerShell):
 
 ```powershell
-python -m pip install -r requirements.txt
+python -m pip install -U pip
+python -m pip install selenium webdriver-manager pytest pytest-html openpyxl
 ```
 
-## Run the site locally
+## Ejecutar el sitio localmente
 
-The site is static; you can open `website/index.html` in a browser or serve it with a simple server:
+El sitio es estático; puede abrir `website/index.html` directamente o servirlo con un servidor simple:
 
 ```powershell
-# From the website folder
+cd website
 python -m http.server 8000
-# Open http://localhost:8000
+# Abrir http://localhost:8000
 ```
 
-## Run the test suite
+## Ejecutar la suite de pruebas
 
-Useful commands:
+Comando recomendado para ejecutar las pruebas seleccionadas y generar el reporte HTML autocontenido:
 
 ```powershell
-# Run all tests (defaults to Chrome)
-pytest -v
-
-# Run tests marked as smoke
-pytest -m smoke -v
-
-# Generate HTML report
-pytest --html=test_results/report.html --self-contained-html -v
+python -m pytest -q --maxfail=1 --html=test_results/pytest_selected_report.html --self-contained-html
 ```
 
-Options available in `conftest.py` (example): `--browser chrome|firefox`, `--headless`.
+Notas de ejecución:
 
-## Test framework design
+- La lista curada de pruebas se encuentra en `tests/selected_tests.txt`.
+- Las pruebas usan POM en `pages/` y utilidades en `utils/`.
 
-- Architecture: Page Object Model (POM)
-- Implemented pages: `LoginPage`, `CatalogPage`, `CartPage`, `ContactPage`, `BasePage`.
-- Utilities: WebDriver management (`WebDriverFactory`), data reading from CSV/Excel (`ExcelUtility`), explicit waits (`WaitUtility`).
-- Test types:
-	- Data-driven login tests (CSV/Excel)
-	- End-to-End checkout workflow
-	- Dynamic waits (WebDriverWait)
-	- Cross-browser testing (Chrome/Firefox)
-	- Iframe and modal interaction tests
+## Generar Excel para Katalon
 
-## Main E2E flow covered
+El script `scripts/generate_katalon_xlsx.py` convierte `tests/selected_tests.txt` en `test_results/katalon_selected_tests.xlsx`. Si el archivo de entrada contiene más de 28 entradas, el script recorta la lista a las 28 pruebas curadas y lo indica en la salida.
 
-1. Login (data-driven)
-2. Search product in catalog
-3. Add product(s) to cart
-4. Checkout process (shipping → payment → review)
-5. Place order and validate success screen
+Ejecutar (PowerShell):
 
-## Files of interest
+```powershell
+python .\scripts\generate_katalon_xlsx.py
+```
 
-- `website/cart.js` — Full cart, checkout logic, animations and modals.
-- `website/catalogo.html` — Product catalog with search and filters.
-- `tests/test_e2e_checkout.py` — Example E2E tests.
-- `tests/test_authentication.py` — Data-driven login tests.
-- `utils/WebDriverFactory.py` — WebDriver construction for Chrome/Firefox.
+Salida esperada (si hay más de 28 entradas):
 
-## Notes for submission
+```
+Input contained 29 tests; trimming to 28.
+Wrote 28 tests to test_results\\katalon_selected_tests.xlsx
+```
 
-- The project was developed as a university assignment. It includes `QUICKSTART.md` and `TEST_FRAMEWORK_README.md` with detailed instructions.
-- For tests requiring drivers, the project uses `webdriver-manager` to download drivers automatically.
-- The checkout flow is a local simulation (no real payments). Card validation may be relaxed for testing purposes.
+## Artefactos generados
 
-## What to review in the demo
+- Reporte de pytest (autocontenido): `test_results/pytest_selected_report.html`
+- Excel exportado para Katalon: `test_results/katalon_selected_tests.xlsx` (28 filas)
 
-- Site navigation and responsive layout.
-- Adding items to the cart and the checkout flow with animations.
-- Running tests: pytest discovery, smoke runs and report generation.
+## Recomendaciones para entrega
 
-## Contact / Author
+- Incluye `test_results/pytest_selected_report.html` y `test_results/katalon_selected_tests.xlsx` en el paquete de entrega si la guía lo permite.
+- Añade `requirements.txt` al repositorio si deseas fijar versiones exactas para reproducibilidad.
+- Verifica localmente la ejecución de pruebas antes de enviar.
 
-Author: ALFA21-desing
+## Comandos útiles de Git (PowerShell)
+
+```powershell
+git add .
+git commit -m "Preparación entrega: corrección POM, script Katalon, reporte pytest"
+git push origin main
+```
+
+## Siguientes pasos que puedo hacer por ti
+
+- Verificar el contenido de `test_results/katalon_selected_tests.xlsx` y abrir el archivo.
+- Añadir un `requirements.txt` y un `CONTRIBUTING.md` con pasos rápidos.
+- Hacer el commit de los cambios y abrir un PR en tu repositorio.
+
+---
+Fecha de actualización: 2026-01-13
 
 
 
