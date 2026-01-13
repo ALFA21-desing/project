@@ -20,117 +20,117 @@ The repository contains:
 - `tests/` — PyTest test cases (authentication, shopping, e2e, cross-browser, iframe).
 - `utils/` — Utilities: `WebDriverFactory.py`, `WaitUtility.py`, `ExcelUtility.py`.
 - `test_data/` — `login_credentials.csv`, `login_credentials.xlsx`.
-# Proyecto: Tienda Web E2E + Framework de Pruebas
+# Project: E2E Web Store + Test Framework
 
-## Resumen profesional
+## Professional summary
 
-Este repositorio contiene una tienda web de ejemplo junto con un framework de pruebas E2E implementado con Selenium, pytest y un patrón Page Object Model (POM). El proyecto ha sido preparado y corregido para entrega académica: se arreglaron selectores rotos, se endurecieron utilidades de Excel/CSV, se creó un exportador a XLSX compatible con Katalon y se generó un reporte HTML autocontenido con los 28 casos de prueba seleccionados.
+This repository contains a sample web store together with an end-to-end (E2E) test framework implemented using Selenium, pytest and a Page Object Model (POM) structure. The project has been prepared and stabilized for academic submission: broken selectors were fixed, Excel/CSV utilities were hardened, a Katalon-compatible XLSX exporter was created, and a self-contained HTML test report was produced for the curated set of 28 test cases.
 
-## Contenido del repositorio
+## Repository contents
 
-- `website/` — Código del sitio (HTML, CSS, JS, assets).
-- `pages/` — Clases POM usadas por las pruebas.
-- `tests/` — Casos de prueba (pytest).
-- `utils/` — Utilidades (por ejemplo `ExcelUtility.py`, `WebDriverFactory.py`).
-- `scripts/` — Scripts auxiliares (por ejemplo `generate_katalon_xlsx.py`).
-- `test_results/` — Carpetas con reportes y archivos generados (HTML, XLSX).
+- `website/` — Site source (HTML, CSS, JS, assets).
+- `pages/` — POM classes used by the tests.
+- `tests/` — Test cases (pytest).
+- `utils/` — Helper modules (for example `ExcelUtility.py`, `WebDriverFactory.py`).
+- `scripts/` — Helper scripts (for example `generate_katalon_xlsx.py`).
+- `test_results/` — Generated artifacts and reports (HTML, XLSX).
 
-## Cambios principales realizados
+## Key changes made
 
-Para estabilizar el proyecto y dejarlo listo para entrega se aplicaron las siguientes correcciones:
+The following fixes and improvements were applied to stabilize the project for submission:
 
-- `pages/CatalogPage.py`: corrección de selectores para coincidir con `website/catalogo.html`.
-- `pages/CartPage.py`: sincronización de selectores y adaptación del flujo de checkout para invocar funciones JS de la página cuando fue necesario.
-- `pages/ContactPage.py`: localizadores actualizados a IDs en español (`nombre`, `mensaje`) para resolver fallos en pruebas con iframes.
-- `utils/ExcelUtility.py`: robustecimiento en la lectura/escritura de Excel/CSV.
-- `scripts/generate_katalon_xlsx.py`: nuevo script para exportar la lista de pruebas seleccionadas a un XLSX para Katalon; ahora limita la exportación a 28 pruebas curadas.
+- `pages/CatalogPage.py`: corrected selectors to match `website/catalogo.html`.
+- `pages/CartPage.py`: synchronized selectors and adapted the checkout flow to call page JS functions where required.
+- `pages/ContactPage.py`: updated locators to Spanish IDs (`nombre`, `mensaje`) to resolve failures related to iframe interactions.
+- `utils/ExcelUtility.py`: made the Excel/CSV handling more robust.
+- `scripts/generate_katalon_xlsx.py`: added a script to export the curated test list to an XLSX for Katalon; the script now enforces exporting the curated 28 tests.
 
-## Archivos front-end validados
+## Front-end files inspected
 
 - `website/catalogo.html`
-- `website/cart.html` y `website/cart.js`
+- `website/cart.html` and `website/cart.js`
 - `website/contacto.html`
 
-## Requisitos y dependencias
+## Requirements and dependencies
 
 - Python 3.12+
-- Navegadores soportados: Google Chrome, Mozilla Firefox
-- Dependencias Python (instalar con pip): `selenium`, `webdriver-manager`, `pytest`, `pytest-html`, `openpyxl`.
+- Supported browsers: Google Chrome, Mozilla Firefox
+- Python packages (install with pip): `selenium`, `webdriver-manager`, `pytest`, `pytest-html`, `openpyxl`.
 
-Instalación rápida (PowerShell):
+Quick install (PowerShell):
 
 ```powershell
 python -m pip install -U pip
 python -m pip install selenium webdriver-manager pytest pytest-html openpyxl
 ```
 
-## Ejecutar el sitio localmente
+## Serve the site locally
 
-El sitio es estático; puede abrir `website/index.html` directamente o servirlo con un servidor simple:
+The site is static; you can open `website/index.html` in a browser or serve it with a simple HTTP server:
 
 ```powershell
 cd website
 python -m http.server 8000
-# Abrir http://localhost:8000
+# Open http://localhost:8000
 ```
 
-## Ejecutar la suite de pruebas
+## Run the test suite
 
-Comando recomendado para ejecutar las pruebas seleccionadas y generar el reporte HTML autocontenido:
+Recommended command to run the curated tests and generate a self-contained HTML report:
 
 ```powershell
 python -m pytest -q --maxfail=1 --html=test_results/pytest_selected_report.html --self-contained-html
 ```
 
-Notas de ejecución:
+Notes:
 
-- La lista curada de pruebas se encuentra en `tests/selected_tests.txt`.
-- Las pruebas usan POM en `pages/` y utilidades en `utils/`.
+- The curated test list is `tests/selected_tests.txt`.
+- Tests use the POM classes in `pages/` and utilities in `utils/`.
 
-## Generar Excel para Katalon
+## Generate Katalon XLSX
 
-El script `scripts/generate_katalon_xlsx.py` convierte `tests/selected_tests.txt` en `test_results/katalon_selected_tests.xlsx`. Si el archivo de entrada contiene más de 28 entradas, el script recorta la lista a las 28 pruebas curadas y lo indica en la salida.
+The script `scripts/generate_katalon_xlsx.py` converts `tests/selected_tests.txt` into `test_results/katalon_selected_tests.xlsx`. If the input contains more than 28 entries, the script trims the list to the curated 28 tests and logs the action.
 
-Ejecutar (PowerShell):
+Run (PowerShell):
 
 ```powershell
 python .\scripts\generate_katalon_xlsx.py
 ```
 
-Salida esperada (si hay más de 28 entradas):
+Expected output when trimming occurs:
 
 ```
 Input contained 29 tests; trimming to 28.
-Wrote 28 tests to test_results\\katalon_selected_tests.xlsx
+Wrote 28 tests to test_results\katalon_selected_tests.xlsx
 ```
 
-## Artefactos generados
+## Generated artifacts
 
-- Reporte de pytest (autocontenido): `test_results/pytest_selected_report.html`
-- Excel exportado para Katalon: `test_results/katalon_selected_tests.xlsx` (28 filas)
+- Self-contained pytest HTML report: `test_results/pytest_selected_report.html`
+- Exported Katalon XLSX: `test_results/katalon_selected_tests.xlsx` (28 rows)
 
-## Recomendaciones para entrega
+## Submission recommendations
 
-- Incluye `test_results/pytest_selected_report.html` y `test_results/katalon_selected_tests.xlsx` en el paquete de entrega si la guía lo permite.
-- Añade `requirements.txt` al repositorio si deseas fijar versiones exactas para reproducibilidad.
-- Verifica localmente la ejecución de pruebas antes de enviar.
+- Include `test_results/pytest_selected_report.html` and `test_results/katalon_selected_tests.xlsx` in your submission package when allowed by the assignment guidelines.
+- Add a `requirements.txt` to pin exact package versions for reproducibility.
+- Verify tests locally before submitting to ensure everything remains green.
 
-## Comandos útiles de Git (PowerShell)
+## Useful Git commands (PowerShell)
 
 ```powershell
 git add .
-git commit -m "Preparación entrega: corrección POM, script Katalon, reporte pytest"
+git commit -m "Prepare submission: POM fixes, Katalon exporter, pytest report"
 git push origin main
 ```
 
-## Siguientes pasos que puedo hacer por ti
+## Next actions I can take for you
 
-- Verificar el contenido de `test_results/katalon_selected_tests.xlsx` y abrir el archivo.
-- Añadir un `requirements.txt` y un `CONTRIBUTING.md` con pasos rápidos.
-- Hacer el commit de los cambios y abrir un PR en tu repositorio.
+- Verify contents of `test_results/katalon_selected_tests.xlsx` and open the file.
+- Add a `requirements.txt` and a short `CONTRIBUTING.md` with quick setup steps.
+- Commit the remaining changes and open a pull request for review.
 
 ---
-Fecha de actualización: 2026-01-13
+Last updated: 2026-01-13
 
 
 
