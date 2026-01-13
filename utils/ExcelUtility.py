@@ -39,7 +39,8 @@ class ExcelUtility:
         # Read data rows
         data = []
         for row in sheet.iter_rows(min_row=2, values_only=True):
-            row_dict = {headers[i]: row[i] for i in range(len(headers))}
+            # Convert None cell values to empty strings for consistency with CSV reading
+            row_dict = {headers[i]: (row[i] if row[i] is not None else "") for i in range(len(headers))}
             data.append(row_dict)
         
         workbook.close()

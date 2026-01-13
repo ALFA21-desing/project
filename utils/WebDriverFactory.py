@@ -8,6 +8,10 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
+import subprocess
+import socket
+import time
+import urllib.request
 
 
 class WebDriverFactory:
@@ -46,10 +50,36 @@ class WebDriverFactory:
         options.add_argument("--disable-notifications")
         options.add_argument("--ignore-certificate-errors")
         
-        service = ChromeService(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=options)
+        service_path = ChromeDriverManager().install()
+        try:
+            service = ChromeService(service_path)
+            driver = webdriver.Chrome(service=service, options=options)
+        except Exception:
+            # Fallback: start chromedriver as a subprocess and connect via RemoteWebDriver
+            sock = socket.socket()
+            sock.bind(('', 0))
+            port = sock.getsockname()[1]
+            sock.close()
+            proc = subprocess.Popen([service_path, f'--port={port}'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            # wait for driver to be ready
+            url = f'http://127.0.0.1:{port}/status'
+            for _ in range(30):
+                try:
+                    with urllib.request.urlopen(url, timeout=1) as resp:
+                        if resp.status == 200:
+                            break
+                except Exception:
+                    time.sleep(0.2)
+            caps = options.to_capabilities() if hasattr(options, 'to_capabilities') else {}
+            from selenium.webdriver.remote.remote_connection import RemoteConnection
+            rc = RemoteConnection(f'http://127.0.0.1:{port}')
+            try:
+                rc.timeout = 30
+            except Exception:
+                pass
+            driver = webdriver.Remote(command_executor=rc, desired_capabilities=caps)
+
         driver.implicitly_wait(10)
-        
         return driver
     
     @staticmethod
@@ -60,9 +90,37 @@ class WebDriverFactory:
         if headless:
             options.add_argument("--headless")
         
-        service = FirefoxService(GeckoDriverManager().install())
-        driver = webdriver.Firefox(service=service, options=options)
-        driver.maximize_window()
+        service_path = GeckoDriverManager().install()
+        try:
+            service = FirefoxService(service_path)
+            driver = webdriver.Firefox(service=service, options=options)
+        except Exception:
+            # Fallback: start geckodriver subprocess and connect via Remote
+            sock = socket.socket()
+            sock.bind(('', 0))
+            port = sock.getsockname()[1]
+            sock.close()
+            proc = subprocess.Popen([service_path, f'--port={port}'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            url = f'http://127.0.0.1:{port}/status'
+            for _ in range(30):
+                try:
+                    with urllib.request.urlopen(url, timeout=1) as resp:
+                        if resp.status == 200:
+                            break
+                except Exception:
+                    time.sleep(0.2)
+            caps = options.to_capabilities() if hasattr(options, 'to_capabilities') else {}
+            from selenium.webdriver.remote.remote_connection import RemoteConnection
+            rc = RemoteConnection(f'http://127.0.0.1:{port}')
+            try:
+                rc.timeout = 30
+            except Exception:
+                pass
+            driver = webdriver.Remote(command_executor=rc, desired_capabilities=caps)
+
+        try:
+            driver.maximize_window()
+        except Exception:
+            pass
         driver.implicitly_wait(10)
-        
         return driver

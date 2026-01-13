@@ -13,14 +13,14 @@ class CatalogPage(BasePage):
     
     # Locators
     SEARCH_INPUT = (By.ID, "search-input")
-    CATEGORY_SELECT = (By.ID, "category-select")
-    SUBCATEGORY_SELECT = (By.ID, "subcategory-select")
-    PRICE_RANGE_SELECT = (By.ID, "price-range-select")
-    SORT_SELECT = (By.ID, "sort-select")
+    CATEGORY_SELECT = (By.ID, "filter-category")
+    SUBCATEGORY_SELECT = (By.ID, "filter-subcategory")
+    PRICE_RANGE_SELECT = (By.ID, "filter-price")
+    SORT_SELECT = (By.ID, "filter-sort")
     PRODUCT_CARDS = (By.CLASS_NAME, "product-card")
-    PRODUCT_TITLES = (By.CSS_SELECTOR, ".product-card h3")
-    PRODUCT_PRICES = (By.CSS_SELECTOR, ".product-card .price")
-    ADD_TO_CART_BUTTONS = (By.CSS_SELECTOR, ".product-card .add-to-cart")
+    PRODUCT_TITLES = (By.CSS_SELECTOR, ".product-card .product-title")
+    PRODUCT_PRICES = (By.CSS_SELECTOR, ".product-card .product-price")
+    ADD_TO_CART_BUTTONS = (By.CSS_SELECTOR, ".product-card [data-add=\"true\"]")
     DATETIME_DISPLAY = (By.ID, "datetime-display")
     CART_COUNT = (By.ID, "cart-count")
     

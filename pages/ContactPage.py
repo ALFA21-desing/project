@@ -11,9 +11,10 @@ class ContactPage(BasePage):
     
     # Locators
     CONTACT_FORM = (By.TAG_NAME, "form")
-    NAME_INPUT = (By.ID, "name")
+    # contacto.html uses Spanish IDs
+    NAME_INPUT = (By.ID, "nombre")
     EMAIL_INPUT = (By.ID, "email")
-    MESSAGE_TEXTAREA = (By.ID, "message")
+    MESSAGE_TEXTAREA = (By.ID, "mensaje")
     SUBMIT_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
     SUCCESS_MESSAGE = (By.CLASS_NAME, "success-message")
     GOOGLE_MAP_IFRAME = (By.TAG_NAME, "iframe")
