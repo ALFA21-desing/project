@@ -7,6 +7,21 @@
 python -m pip install -r requirements.txt
 ```
 
+### 2. (Optional) Start server
+If you want to exercise dynamic pages such as the admin dashboard you
+should start the backend server in a separate terminal:
+
+```powershell
+cd backend
+npm install
+npm start
+```
+
+
+_For projects that integrate with the backend you may also need a
+MySQL instance; run `mysql -u root -p < db_setup.sql` to create the
+schema shown in the README._
+
 ### 2. Run Quick Demo Tests
 ```powershell
 python run_quick_tests.py

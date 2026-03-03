@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Jewelry obelisco</title>
+    <link rel="icon" href="assets/LO.ico" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: left;
+        }
+        th {
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="top-header">
+            <div style="display:flex;align-items:center;gap:12px">
+                <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
+                <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">OBELISCO</a></h1>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+                <span id="datetime-display" style="color:var(--muted);font-size:0.9rem;margin-right:10px"></span>
+                <a href="cart.html" style="color:var(--text);text-decoration:none">Cart (<span id="cart-count">0</span>)</a>
+                <a href="#" id="logoutLink" style="color:var(--text);text-decoration:none">Logout</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="catalogo.html">Catalog</a></li>
+                <li><a href="admin.html" class="active">Admin</a></li>
+                <li><a href="contacto.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Product Management</h2>
+        <p>Below is the current list of products stored in the database.</p>
+        <table id="productsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Description</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- static sample rows used when backend isn't available -->
+                <tr><td>1</td><td>Silver Necklace</td><td>Neckwear</td><td>49.99</td><td>120</td><td>Elegant sterling silver necklace</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>2</td><td>Gold Ring</td><td>Rings</td><td>199.99</td><td>40</td><td>Solid 14k gold wedding band</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>3</td><td>Diamond Earrings</td><td>Earrings</td><td>499.99</td><td>20</td><td>Sparkling diamond studs</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>4</td><td>Pearl Bracelet</td><td>Bracelets</td><td>79.99</td><td>75</td><td>Classic freshwater pearl bracelet</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>5</td><td>Ruby Pendant</td><td>Neckwear</td><td>299.99</td><td>35</td><td>Heart-shaped ruby pendant</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>6</td><td>Sapphire Studs</td><td>Earrings</td><td>349.99</td><td>50</td><td>Blue sapphire stud earrings</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>7</td><td>Leather Watch</td><td>Watches</td><td>129.99</td><td>60</td><td>Men's leather strap watch</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>8</td><td>Gold Hoop Earrings</td><td>Earrings</td><td>89.99</td><td>80</td><td>Classic gold hoop earrings</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>9</td><td>Emerald Ring</td><td>Rings</td><td>399.99</td><td>30</td><td>Emerald cocktail ring</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>10</td><td>Copper Cuff</td><td>Bracelets</td><td>29.99</td><td>150</td><td>Hand-forged copper cuff bracelet</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>11</td><td>Opal Necklace</td><td>Neckwear</td><td>219.99</td><td>45</td><td>Opal and silver pendant</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>12</td><td>Platinum Band</td><td>Rings</td><td>599.99</td><td>25</td><td>Polished platinum wedding band</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>13</td><td>Turquoise Bracelet</td><td>Bracelets</td><td>59.99</td><td>90</td><td>Beaded turquoise bracelet</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>14</td><td>Diamond Tennis Bracelet</td><td>Bracelets</td><td>999.99</td><td>15</td><td>Classic diamond tennis bracelet</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>15</td><td>Rose Gold Necklace</td><td>Neckwear</td><td>129.99</td><td>70</td><td>Delicate rose gold chain necklace</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>16</td><td>Silver Toe Ring</td><td>Rings</td><td>19.99</td><td>200</td><td>Adjustable silver toe ring</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>17</td><td>Amethyst Earrings</td><td>Earrings</td><td>69.99</td><td>85</td><td>Purple amethyst drop earrings</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>18</td><td>Men's Cufflinks</td><td>Accessories</td><td>49.99</td><td>110</td><td>Silver cufflinks set</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>19</td><td>Charm Anklet</td><td>Bracelets</td><td>39.99</td><td>95</td><td>Gold charm anklet</td><td>2026-03-01 12:00:00</td></tr>
+                <tr><td>20</td><td>Crystal Pendant</td><td>Neckwear</td><td>24.99</td><td>130</td><td>Faceted crystal pendant</td><td>2026-03-01 12:00:00</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer style="margin-top:50px">
+        <div class="footer-content">
+            <p class="p1">© JEWELRY OBELISCO. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+        // verify that current user is admin, otherwise redirect
+        const currentUser = JSON.parse(localStorage.getItem('current_user') || '{}');
+        if (!currentUser.username || currentUser.username.toLowerCase() !== 'admin') {
+            window.location.href = 'login.html';
+        }
+
+        // fetch products from backend
+        async function loadProducts() {
+            try {
+                const resp = await fetch('/api/products');
+                const products = await resp.json();
+                const tbody = document.querySelector('#productsTable tbody');
+                tbody.innerHTML = '';
+                if (products.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7">No products available.</td></tr>';
+                    return;
+                }
+                products.forEach(p => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${p.product_id}</td>
+                        <td>${p.name}</td>
+                        <td>${p.category || ''}</td>
+                        <td>${p.price}</td>
+                        <td>${p.stock}</td>
+                        <td>${p.description || ''}</td>
+                        <td>${p.created_at}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                console.error('failed to load products', err);
+                const tbody = document.querySelector('#productsTable tbody');
+                // keep any static rows rather than wipe everything,
+                // but show an error row at the end
+                tbody.insertAdjacentHTML('beforeend',
+                    '<tr><td colspan="7">Error loading products (showing sample data)</td></tr>');
+            }
+        }
+
+        document.getElementById('logoutLink').addEventListener('click', e => {
+            e.preventDefault();
+            localStorage.removeItem('current_user');
+            window.location.href = 'login.html';
+        });
+
+        loadProducts();
+
+        // update clock
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const dateTimeEl = document.getElementById('datetime-display');
+            if (dateTimeEl) {
+                dateTimeEl.textContent = now.toLocaleDateString('en-US', options);
+            }
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>

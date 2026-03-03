@@ -227,7 +227,12 @@
             msg.className = 'success';
             
             setTimeout(() => {
-                window.location.href = 'index.html';
+                // redirect admin to the admin dashboard page
+                if (username.toLowerCase() === 'admin') {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
             }, 1200);
         } else {
             msg.textContent = 'Incorrect username or password.';

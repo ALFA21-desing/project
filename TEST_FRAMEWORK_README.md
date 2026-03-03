@@ -274,6 +274,7 @@ pytest -v --html=test_results/report.html --self-contained-html
 | `e2e` | End-to-end workflows | `pytest -m e2e` |
 | `cross_browser` | Cross-browser tests | `pytest -m cross_browser` |
 | `iframe` | Iframe interaction tests | `pytest -m iframe` |
+| `admin` | Admin dashboard access (requires backend) | `pytest -m admin` |
 | `slow` | Long-running tests | `pytest -m slow` |
 
 ###  Configuration
@@ -291,6 +292,27 @@ pytest -v --html=test_results/report.html --self-contained-html
 - `driver_class`: Class-scoped WebDriver
 - Screenshot capture on failure
 - Test results directory creation
+- **`admin` marker**: exercises the new admin dashboard; skipped when base_url is file:// protocol
+
+#### **Database Helpers**
+- The helper in ``utils/Database.py`` may be imported directly in
+  fixtures or tests.  Credentials are read from environment variables
+  (``DB_HOST``, ``DB_USER``, ``DB_PASSWORD``, ``DB_NAME``) or default to
+  localhost/jewelry_store_db.
+
+Example fixture:
+
+```python
+import pytest
+from utils.Database import get_db
+
+@pytest.fixture(scope="session")
+def db_connection():
+    db = get_db()
+    yield db
+    db.close()
+```
+
 
 ###  Reporting
 
