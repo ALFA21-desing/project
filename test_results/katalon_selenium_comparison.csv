@@ -1,0 +1,31 @@
+TestID,KatalonStatus,SeleniumStatus,Discrepancy,Notes
+K-001,Pass,Pass,None,Both tools validated home page smoke successfully
+K-002,Pass,Pass,None,Catalog page smoke matches
+K-003,Pass,Pass,None,Detail page load identical
+K-004,Pass,Pass,None,Cart add behavior consistent
+K-005,Pass,Pass,None,Removal logic identical
+K-006,Pass,Pass,None,Quantity changes handled by both
+K-007,Pass,Fail,Validation differences,Selenium tests reported missing client-side error for one dataset; Katalon data-driven run caught it reliably
+K-008,Pass,Pass,None,Payment step basic behavior same
+K-009,Pass,Pass,None,End-to-end flow matched
+K-010,Pass,Pass,None,Search results consistent
+K-011,Pass,Pass,None,Registration with valid data matched
+K-012,Pass,Fail,Data handling difference,One invalid set caused different server/client validation in Selenium runs
+K-013,Pass,Pass,None,Invalid email caught by both
+K-014,Pass,Pass,None,Short password validation consistent
+K-015,Pass,Pass,None,Missing last name validation consistent
+K-016,Pass,Pass,None,Name field validation consistent
+K-017,Pass,Pass,None,Phone format validation matched
+K-018,Pass,Pass,None,Address validation matched
+K-019,Pass,Pass,None,Zipcode validation matched
+K-020,Pass,Pass,None,Invalid zipcode handled similarly
+K-021,Pass,Fail,Viewport rendering difference,Tablet layout showed minor differences in Selenium Firefox run
+K-022,Pass,Pass,None,Desktop vs Tablet comparisons matched in Katalon runs
+K-023,Pass,Fail,Locator robustness,Katalon Relative XPath located dynamic row reliably; Selenium test using static selectors failed intermittently
+K-024,Pass,Fail,Object repository advantage,Katalon Object Repository made re-locating easier; Selenium required custom code
+K-025,Pass,NA,Report format difference,Katalon generated richer built-in report; Selenium's pytest-html required additional configuration
+K-026,Pass,Pass,None,Data-driven login matched across tools
+K-027,Pass,Pass,None,Accessibility checks aligned
+K-028,Pass,Pass,None,Iframe/modal interaction matched
+K-029,Pass,Pass,None,Simple performance checks matched
+K-030,Pass,Fail,Sanitization observation,Katalon flagged client-side sanitization; Selenium test implementation did not assert escaped content

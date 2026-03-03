@@ -1,10 +1,10 @@
 # Selenium Test Automation Framework
 ## Jewelry Obelisco E-commerce Website
 
-### 📋 Project Overview
+###  Project Overview
 This is a comprehensive Selenium test automation framework built using Python, demonstrating advanced testing concepts, design patterns, and best practices for automated web testing.
 
-### 🏗️ Framework Architecture
+###  Framework Architecture
 
 #### **Page Object Model (POM) Structure**
 ```
@@ -42,7 +42,7 @@ project/
 └── README.md                # This file
 ```
 
-### 🚀 Setup Instructions
+### Setup Instructions
 
 #### **1. Install Dependencies**
 ```powershell
@@ -59,7 +59,7 @@ python -c "import selenium; print('Selenium version:', selenium.__version__)"
 pytest --version
 ```
 
-### 🧪 Running Tests
+###  Running Tests
 
 #### **Run All Tests**
 ```powershell
@@ -121,7 +121,7 @@ pytest --headless
 pytest --base-url="http://localhost:8000"
 ```
 
-### 📊 Test Coverage
+###  Test Coverage
 
 #### **1. Data-Driven Login Tests** (`test_authentication.py`)
 - **CSV Data Source**: Reads credentials from CSV file
@@ -184,35 +184,35 @@ pytest --base-url="http://localhost:8000"
 - Iframe element location
 - Context isolation
 
-### 🛠️ Framework Features
+###  Framework Features
 
 #### **Design Patterns**
-- ✅ **Page Object Model (POM)**: Separation of page logic and tests
-- ✅ **Factory Pattern**: WebDriverFactory for browser creation
-- ✅ **Singleton Pattern**: Configuration management
-- ✅ **Inheritance**: BasePage for code reuse
+-  **Page Object Model (POM)**: Separation of page logic and tests
+-  **Factory Pattern**: WebDriverFactory for browser creation
+-  **Singleton Pattern**: Configuration management
+-  **Inheritance**: BasePage for code reuse
 
 #### **Advanced Selenium Techniques**
-- ✅ **Explicit Waits**: WebDriverWait with custom conditions
-- ✅ **Dynamic Element Handling**: Wait for element states
-- ✅ **Iframe Management**: Context switching
-- ✅ **JavaScript Execution**: Enhanced interactions
-- ✅ **Screenshot Capture**: Automatic on failure
+- **Explicit Waits**: WebDriverWait with custom conditions
+-  **Dynamic Element Handling**: Wait for element states
+-  **Iframe Management**: Context switching
+-  **JavaScript Execution**: Enhanced interactions
+-  **Screenshot Capture**: Automatic on failure
 
 #### **Test Management**
-- ✅ **Pytest Fixtures**: Setup/teardown automation
-- ✅ **Parametrization**: Data-driven testing
-- ✅ **Markers**: Test categorization
-- ✅ **HTML Reports**: pytest-html integration
-- ✅ **Logging**: Comprehensive execution logs
+-  **Pytest Fixtures**: Setup/teardown automation
+-  **Parametrization**: Data-driven testing
+-  **Markers**: Test categorization
+-  **HTML Reports**: pytest-html integration
+-  **Logging**: Comprehensive execution logs
 
 #### **Data Management**
-- ✅ **CSV Support**: Read test data from CSV
-- ✅ **Excel Support**: Read test data from Excel
-- ✅ **Utility Classes**: ExcelUtility for data operations
-- ✅ **Test Data Separation**: External data files
+-  **CSV Support**: Read test data from CSV
+-  **Excel Support**: Read test data from Excel
+-  **Utility Classes**: ExcelUtility for data operations
+-  **Test Data Separation**: External data files
 
-### 📈 Test Execution Example
+###  Test Execution Example
 
 ```powershell
 # Run complete test suite with HTML report
@@ -229,7 +229,7 @@ pytest -v --html=test_results/report.html --self-contained-html
 # tests/test_iframe_interaction.py::TestIframeInteraction::test_iframe_interaction_on_contact_page PASSED
 ```
 
-### 🎯 Key Highlights
+###  Key Highlights
 
 #### **1. Framework Design**
 - Robust POM implementation
@@ -264,7 +264,7 @@ pytest -v --html=test_results/report.html --self-contained-html
 - Authentication flows
 - Cross-browser validation
 
-### 📝 Test Markers Reference
+###  Test Markers Reference
 
 | Marker | Description | Usage |
 |--------|-------------|-------|
@@ -276,7 +276,7 @@ pytest -v --html=test_results/report.html --self-contained-html
 | `iframe` | Iframe interaction tests | `pytest -m iframe` |
 | `slow` | Long-running tests | `pytest -m slow` |
 
-### 🔧 Configuration
+###  Configuration
 
 #### **pytest.ini Settings**
 - Test discovery patterns
@@ -292,7 +292,7 @@ pytest -v --html=test_results/report.html --self-contained-html
 - Screenshot capture on failure
 - Test results directory creation
 
-### 📊 Reporting
+###  Reporting
 
 #### **HTML Report**
 ```powershell
@@ -314,7 +314,7 @@ pytest --html=test_results/report.html --self-contained-html
 - `test_results/test_execution.log`: Detailed execution log
 - `test_results/screenshots/`: Failure screenshots
 
-### 🌟 Best Practices Demonstrated
+###  Best Practices Demonstrated
 
 1. **Page Object Model**: Clean separation of test logic and page interactions
 2. **DRY Principle**: Reusable methods in BasePage
@@ -327,7 +327,7 @@ pytest --html=test_results/report.html --self-contained-html
 9. **Code Organization**: Clear directory structure
 10. **Documentation**: Comprehensive docstrings and comments
 
-### 🚦 Running Quick Tests
+###  Running Quick Tests
 
 ```powershell
 # Quick smoke test (2-3 minutes)
@@ -340,20 +340,20 @@ pytest tests/test_authentication.py::TestAuthentication::test_login_with_csv_dat
 pytest tests/test_e2e_checkout.py::TestE2ECheckout::test_complete_checkout_workflow -v
 ```
 
-### 📚 Additional Resources
+###  Additional Resources
 
 - **Selenium Documentation**: https://www.selenium.dev/documentation/
 - **Pytest Documentation**: https://docs.pytest.org/
 - **Page Object Model**: https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/
 
-### ✅ Framework Validation
+###  Framework Validation
 
 This framework demonstrates:
-- ✅ Strong coding skills (Python, OOP, design patterns)
-- ✅ Framework design expertise (POM, utilities, fixtures)
-- ✅ Advanced Selenium knowledge (waits, iframes, cross-browser)
-- ✅ Test automation best practices (data-driven, E2E, reporting)
-- ✅ Professional project structure (modular, maintainable, documented)
+-  Strong coding skills (Python, OOP, design patterns)
+-  Framework design expertise (POM, utilities, fixtures)
+-  Advanced Selenium knowledge (waits, iframes, cross-browser)
+-  Test automation best practices (data-driven, E2E, reporting)
+-  Professional project structure (modular, maintainable, documented)
 
 ---
 

@@ -165,29 +165,31 @@ function handleDragLeave(e) {
 }
 
 document.addEventListener('click', function(e){
-  const addBtn = e.target.closest('[data-add]');
-  const fallbackBtn = e.target.closest('.btn.primary');
-  const btn = addBtn || fallbackBtn;
-  
-  if(!btn) return;
-  if(btn.closest && btn.closest('#checkout-form')) return;
-  if(addBtn && addBtn.dataset.add && addBtn.dataset.add.toLowerCase() === 'false') return;
-
+  // Only respond to explicit add-to-cart triggers: elements with data-add="true"
+  const addBtn = e.target.closest('[data-add="true"]');
+  if(!addBtn) return;
+  if(addBtn.closest && addBtn.closest('#checkout-form')) return;
   e.preventDefault();
-  
+
   let title, price;
-  const card = btn.closest('.product-card') || btn.closest('.product-detail') || btn.closest('.product-info');
-  
+  const card = addBtn.closest('.product-card') || addBtn.closest('.product-detail') || addBtn.closest('.product-info');
+
   if(card){
-    const tEl = card.querySelector('.product-title') || document.querySelector('.product-meta h1');
+    const tEl = card.querySelector('.product-title') || card.querySelector('.product-meta h1') || card.querySelector('h1');
     const pEl = card.querySelector('.product-price') || card.querySelector('.price');
-    title = tEl ? tEl.textContent.trim() : (btn.dataset.title || 'Product');
-    price = pEl ? parseFloat((pEl.textContent||'').replace(/[^0-9\.]/g,''))||0 : 0;
+    title = tEl ? tEl.textContent.trim() : (addBtn.dataset.title || 'Product');
+    price = pEl ? parseFloat((pEl.textContent||'').replace(/[^0-9\.]/g,''))||0 : Number(addBtn.dataset.price)||0;
   } else {
-    title = btn.dataset.title || 'Product';
-    price = Number(btn.dataset.price)||0;
+    // If button is not inside a product card, require explicit dataset values to add
+    if(addBtn.dataset && (addBtn.dataset.title || addBtn.dataset.price)){
+      title = addBtn.dataset.title || 'Product';
+      price = Number(addBtn.dataset.price)||0;
+    } else {
+      // Not a valid add-to-cart source; ignore click
+      return;
+    }
   }
-  
+
   addToCart({title, price, qty:1});
   showToast('Added to cart: ' + title);
 });
