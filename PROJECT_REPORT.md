@@ -1,157 +1,157 @@
 # JEWELRY E-COMMERCE PLATFORM
-## Reporte Final del Proyecto
+## Final Project Report
 
 ---
 
-**Estudiante:** Sebastián Muñoz  
-**Institución:** Matrix College  
-**Carrera:** Computer Science  
-**Fecha de Presentación:** 17 de marzo de 2026  
-**Período:** 7 semanas (Semanas 1-7)
+**Student:** Sebastián Muñoz  
+**Institution:** Matrix College  
+**Program:** Computer Science  
+**Presentation Date:** March 17, 2026  
+**Period:** 7 weeks (Weeks 1-7)
 
 ---
 
-## TABLA DE CONTENIDOS
+## TABLE OF CONTENTS
 
-1. [Descripción General](#descripción-general)
-2. [Objetivos del Proyecto](#objetivos-del-proyecto)
-3. [Stack Tecnológico](#stack-tecnológico)
-4. [Estructura del Proyecto](#estructura-del-proyecto)
-5. [Planificación por Semanas](#planificación-por-semanas)
-6. [Características Implementadas](#características-implementadas)
-7. [Testing y Calidad](#testing-y-calidad)
+1. [General Description](#general-description)
+2. [Project Objectives](#project-objectives)
+3. [Technology Stack](#technology-stack)
+4. [Project Structure](#project-structure)
+5. [Weekly Planning](#weekly-planning)
+6. [Implemented Features](#implemented-features)
+7. [Testing and Quality](#testing-and-quality)
 8. [CI/CD](#cicd)
-9. [Conclusiones](#conclusiones)
-10. [Referencias Técnicas](#referencias-técnicas)
+9. [Conclusions](#conclusions)
+10. [Technical References](#technical-references)
 
 ---
 
-## DESCRIPCIÓN GENERAL
+## GENERAL DESCRIPTION
 
-"Jewelry Obelisco" es una **plataforma de e-commerce completa y segura** para la venta de joyería en línea. Implementa un sistema moderno full-stack con autenticación JWT, gestión de base de datos MySQL, API REST en Node.js, y un frontend responsivo con HTML5/CSS3/JavaScript.
+"Jewelry Obelisco" is a **complete and secure e-commerce platform** for online jewelry sales. It implements a modern full-stack system with JWT authentication, MySQL database management, Node.js REST API, and a responsive frontend with HTML5/CSS3/JavaScript.
 
-El proyecto demuestra dominio en:
-- ✅ Desarrollo full-stack (frontend + backend)
-- ✅ Seguridad (JWT, bcrypt, SQL injection prevention)
-- ✅ Testing automatizado (Selenium, Katalon, JMeter)
+The project demonstrates mastery in:
+- ✅ Full-stack development (frontend + backend)
+- ✅ Security (JWT, bcrypt, SQL injection prevention)
+- ✅ Automated testing (Selenium, Katalon, JMeter)
 - ✅ CI/CD (GitHub Actions)
-- ✅ Buenas prácticas de ingeniería de software
+- ✅ Software engineering best practices
 
 ---
 
-## OBJETIVOS DEL PROYECTO
+## PROJECT OBJECTIVES
 
-### Objetivos Generales
-1. **Crear una plataforma de e-commerce funcional y segura** que permita a usuarios comprar joyas online
-2. **Implementar un sistema de autenticación robusto** con JWT y hashing de contraseñas
-3. **Desarrollar una API REST completa** para consumo desde el frontend
-4. **Crear un dashboard administrativo** para gestión de productos y órdenes
-5. **Implementar testing exhaustivo** a nivel unitario, integración y carga
+### General Objectives
+1. **Create a functional and secure e-commerce platform** that allows users to buy jewelry online
+2. **Implement a robust authentication system** with JWT and password hashing
+3. **Develop a complete REST API** for frontend consumption
+4. **Create an administrative dashboard** for product and order management
+5. **Implement comprehensive testing** at unit, integration, and load levels
 
-### Objetivos Específicos
-- Diseñar base de datos relacional normalizada para usuarios, productos, carritos y órdenes
-- Implementar endpoints CRUD para productos, autenticación, carrito y checkout
-- Desarrollar frontend responsivo con validación de formularios y UI intuitiva
-- Crear tests automatizados funcionales y de performance
-- Configurar pipeline CI/CD automático en GitHub Actions
+### Specific Objectives
+- Design normalized relational database for users, products, carts, and orders
+- Implement CRUD endpoints for products, authentication, cart, and checkout
+- Develop responsive frontend with form validation and intuitive UI
+- Create automated functional and performance tests
+- Configure automatic CI/CD pipeline in GitHub Actions
 
 ---
 
-## STACK TECNOLÓGICO
+## TECHNOLOGY STACK
 
-### Base de Datos
-- **MySQL 8.0+** - Base de datos relacional
-- **MySQL Workbench** - Herramienta de administración
+### Database
+- **MySQL 8.0+** - Relational database
+- **MySQL Workbench** - Administration tool
 
 ### Backend
-- **Node.js 18+** - Runtime JavaScript
-- **Express.js 4.18** - Framework web
-- **bcryptjs** - Hashing seguro de contraseñas
-- **jsonwebtoken** - Implementación JWT
-- **mysql2/promise** - Driver MySQL async
+- **Node.js 18+** - JavaScript runtime
+- **Express.js 4.18** - Web framework
+- **bcryptjs** - Secure password hashing
+- **jsonwebtoken** - JWT implementation
+- **mysql2/promise** - Async MySQL driver
 
 ### Frontend
-- **HTML5** - Estructura semántica
-- **CSS3** - Estilos responsivos y modernos
-- **JavaScript ES6+** - Lógica y manipulación del DOM
-- **Fetch API** - Comunicación con backend
+- **HTML5** - Semantic structure
+- **CSS3** - Responsive and modern styles
+- **JavaScript ES6+** - Logic and DOM manipulation
+- **Fetch API** - Backend communication
 
 ### Testing
-- **Python 3.9+** - Lenguaje de testing
-- **Selenium** - Automatización de navegador
-- **Pytest** - Framework de testing
-- **Katalon Studio** - Testing de UI
-- **Apache JMeter** - Testing de performance
+- **Python 3.9+** - Testing language
+- **Selenium** - Browser automation
+- **Pytest** - Testing framework
+- **Katalon Studio** - UI testing
+- **Apache JMeter** - Performance testing
 
 ### DevOps
 - **GitHub Actions** - CI/CD workflow
-- **Git** - Control de versiones
+- **Git** - Version control
 
 ---
 
-## ESTRUCTURA DEL PROYECTO
+## PROJECT STRUCTURE
 
 ```
 project/
 ├── backend/
-│   ├── server.js           # Servidor Express principal
-│   ├── package.json        # Dependencias Node.js
-│   └── node_modules/       # Paquetes instalados
+│   ├── server.js           # Main Express server
+│   ├── package.json        # Node.js dependencies
+│   └── node_modules/       # Installed packages
 ├── website/
-│   ├── index.html          # Página de inicio
-│   ├── catalogo.html       # Catálogo de productos
-│   ├── cart.html           # Carrito de compras
-│   ├── login.html          # Página de login
-│   ├── register.html       # Registro de usuarios
-│   ├── admin.html          # Dashboard administrativo
-│   ├── order-history.html  # Historial de órdenes
-│   ├── user-profile.html   # Perfil de usuario
-│   ├── cart.js             # Lógica del carrito
-│   ├── style.css           # Estilos globales
-│   └── assets/             # Imágenes y recursos
+│   ├── index.html          # Homepage
+│   ├── catalogo.html       # Product catalog
+│   ├── cart.html           # Shopping cart
+│   ├── login.html          # Login page
+│   ├── register.html       # User registration
+│   ├── admin.html          # Administrative dashboard
+│   ├── order-history.html  # Order history
+│   ├── user-profile.html   # User profile
+│   ├── cart.js             # Cart logic
+│   ├── style.css           # Global styles
+│   └── assets/             # Images and resources
 ├── pages/
-│   ├── BasePage.py         # Clase base para Page Object Model
-│   ├── LoginPage.py        # Page Object para login
-│   ├── AdminPage.py        # Page Object para admin
-│   └── ...                 # Otros pages
+│   ├── BasePage.py         # Base class for Page Object Model
+│   ├── LoginPage.py        # Login Page Object
+│   ├── AdminPage.py        # Admin Page Object
+│   └── ...                 # Other pages
 ├── tests/
-│   ├── test_admin.py       # Tests del dashboard
-│   ├── test_authentication.py # Tests de login/registro
-│   ├── test_shopping.py    # Tests de compra
-│   └── ...                 # Otros tests
+│   ├── test_admin.py       # Dashboard tests
+│   ├── test_authentication.py # Login/register tests
+│   ├── test_shopping.py    # Shopping tests
+│   └── ...                 # Other tests
 ├── utils/
-│   ├── Database.py         # Utilidades de BD
-│   ├── WebDriverFactory.py # Factory para browsers
-│   ├── WaitUtility.py      # Esperas explícitas
-│   └── ExcelUtility.py     # Utilidades para Excel
-├── db_setup.sql            # Script de creación de BD
-├── pytest.ini              # Configuración de tests
-├── requirements.txt        # Dependencias Python
+│   ├── Database.py         # Database utilities
+│   ├── WebDriverFactory.py # Browser factory
+│   ├── WaitUtility.py      # Explicit waits
+│   └── ExcelUtility.py     # Excel utilities
+├── db_setup.sql            # Database creation script
+├── pytest.ini              # Test configuration
+├── requirements.txt        # Python dependencies
 └── .github/
     └── workflows/
-        └── ci.yml          # Workflow de GitHub Actions
+        └── ci.yml          # GitHub Actions workflow
 ```
 
 ---
 
-## PLANIFICACIÓN POR SEMANAS
+## WEEKLY PLANNING
 
-### SEMANA 1: DATABASE & SQL SCRIPT (15%)
+### WEEK 1: DATABASE & SQL SCRIPT (15%)
 
-**Tareas Completadas:**
-- ✅ Instalación de MySQL Workbench
-- ✅ Creación de base de datos `jewelry_store_db`
-- ✅ Diseño de 6 tablas principales:
-  - `users` - Usuarios con roles (user/admin)
-  - `products` - Catálogo de joyería
-  - `cart` - Carrito de compras
-  - `orders` - Historial de órdenes
-  - `order_details` - Detalles por orden
-  - `logs` - Auditoría de sistema
+**Completed Tasks:**
+- ✅ MySQL Workbench installation
+- ✅ Creation of `jewelry_store_db` database
+- ✅ Design of 6 main tables:
+  - `users` - Users with roles (user/admin)
+  - `products` - Jewelry catalog
+  - `cart` - Shopping cart
+  - `orders` - Order history
+  - `order_details` - Order details
+  - `logs` - System audit
 
-**Script SQL:**
+**SQL Script:**
 ```sql
--- Tabla de usuarios con roles
+-- Users table with roles
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(100) NOT NULL,
@@ -163,7 +163,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabla de productos
+-- Products table
 CREATE TABLE products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
@@ -174,7 +174,7 @@ CREATE TABLE products (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabla de carrito
+-- Cart table
 CREATE TABLE cart (
     cart_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -184,7 +184,7 @@ CREATE TABLE cart (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
--- Tabla de órdenes
+-- Orders table
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -194,7 +194,7 @@ CREATE TABLE orders (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
--- Tabla de detalles de orden
+-- Order details table
 CREATE TABLE order_details (
     detail_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
@@ -206,78 +206,78 @@ CREATE TABLE order_details (
 );
 ```
 
-**Entregables:** db_setup.sql, captura de pantalla de BD
+**Deliverables:** db_setup.sql, database screenshot
 
 ---
 
-### SEMANA 2: BACKEND API (15%)
+### WEEK 2: BACKEND API (15%)
 
-**Endpoints Implementados:**
+**Implemented Endpoints:**
 
-| Método | Endpoint | Autenticación | Descripción |
-|--------|----------|---------------|-------------|
-| POST | /api/register | No | Registrar nuevo usuario |
-| POST | /api/login | No | Login y obtener JWT |
-| GET | /api/products | No | Listar todos los productos |
-| POST | /api/products | JWT + Admin | Crear nuevo producto |
-| GET | /api/cart | JWT | Ver carrito del usuario |
-| POST | /api/cart | JWT | Agregar item al carrito |
-| PUT | /api/cart/:id | JWT | Actualizar cantidad |
-| DELETE | /api/cart/:id | JWT | Eliminar del carrito |
-| POST | /api/checkout | JWT | Procesar compra |
-| GET | /api/orders | JWT | Ver órdenes del usuario |
+| Method | Endpoint | Authentication | Description |
+|--------|----------|----------------|-------------|
+| POST | /api/register | No | Register new user |
+| POST | /api/login | No | Login and get JWT |
+| GET | /api/products | No | List all products |
+| POST | /api/products | JWT + Admin | Create new product |
+| GET | /api/cart | JWT | View user's cart |
+| POST | /api/cart | JWT | Add item to cart |
+| PUT | /api/cart/:id | JWT | Update quantity |
+| DELETE | /api/cart/:id | JWT | Remove from cart |
+| POST | /api/checkout | JWT | Process purchase |
+| GET | /api/orders | JWT | View user's orders |
 
-**Usuarios Demo (seeded automáticamente):**
+**Demo Users (automatically seeded):**
 - Admin: `admin` / `Admin@123`
-- Usuario regular: `user` / `User@123`
+- Regular user: `user` / `User@123`
 
-**Seguridad Implementada:**
-- ✅ Contraseñas hasheadas con bcrypt (salt rounds: 10)
-- ✅ JWT con expiración (configurable)
-- ✅ Validación de roles (admin-only endpoints)
-- ✅ CORS habilitado para requests del frontend
-- ✅ Validación de entrada en todos los endpoints
-
----
-
-### SEMANA 3: FRONTEND INTEGRATION (15%)
-
-**Características Implementadas:**
-
-1. **Integración de API en Frontend**
-   - Carrito dinámico que sincroniza con API
-   - Login/Registro conectado a autenticación JWT
-   - Catálogo que carga productos de BD en tiempo real
-
-2. **Páginas Implementadas**
-   - 📄 **index.html** - Página de inicio con hero section
-   - 📄 **catalogo.html** - Catálogo con filtros y búsqueda
-   - 📄 **cart.html** - Carrito con checkout multi-paso
-   - 📄 **login.html** - Login con validación
-   - 📄 **register.html** - Registro con validación de requisitos
-   - 📄 **admin.html** - Dashboard para agregar productos
-   - 📄 **order-history.html** - Historial de órdenes
-   - 📄 **user-profile.html** - Perfil de usuario
-
-3. **Funcionalidades**
-   - Agregar/quitar productos del carrito
-   - Filtros por categoría, precio, búsqueda
-   - Carrito persistente (localStorage + API)
-   - Checkout con validación de dirección
-   - Historial de órdenes
+**Implemented Security:**
+- ✅ Passwords hashed with bcrypt (salt rounds: 10)
+- ✅ JWT with expiration (configurable)
+- ✅ Role validation (admin-only endpoints)
+- ✅ CORS enabled for frontend requests
+- ✅ Input validation on all endpoints
 
 ---
 
-### SEMANA 4: JWT AUTHENTICATION (15%)
+### WEEK 3: FRONTEND INTEGRATION (15%)
 
-**Implementación de Seguridad:**
+**Implemented Features:**
 
-1. **Hashing de Contraseñas**
+1. **Frontend API Integration**
+   - Dynamic cart that syncs with API
+   - Login/Register connected to JWT authentication
+   - Catalog that loads products from DB in real-time
+
+2. **Implemented Pages**
+   - 📄 **index.html** - Homepage with hero section
+   - 📄 **catalogo.html** - Catalog with filters and search
+   - 📄 **cart.html** - Cart with multi-step checkout
+   - 📄 **login.html** - Login with validation
+   - 📄 **register.html** - Registration with requirement validation
+   - 📄 **admin.html** - Dashboard for adding products
+   - 📄 **order-history.html** - Order history
+   - 📄 **user-profile.html** - User profile
+
+3. **Functionalities**
+   - Add/remove products from cart
+   - Filters by category, price, search
+   - Persistent cart (localStorage + API)
+   - Checkout with address validation
+   - Order history
+
+---
+
+### WEEK 4: JWT AUTHENTICATION (15%)
+
+**Security Implementation:**
+
+1. **Password Hashing**
    ```javascript
    const hashedPassword = await bcrypt.hash(password, 10);
    ```
 
-2. **Generación de JWT**
+2. **JWT Generation**
    ```javascript
    const token = jwt.sign(
        { userId: user.user_id, username: user.username, role: user.role },
@@ -285,7 +285,7 @@ CREATE TABLE order_details (
    );
    ```
 
-3. **Middleware de Autenticación**
+3. **Authentication Middleware**
    ```javascript
    function authenticateToken(req, res, next) {
       const token = req.headers['authorization']?.split(' ')[1];
@@ -298,96 +298,96 @@ CREATE TABLE order_details (
    }
    ```
 
-4. **Protección de Rutas**
-   - `/checkout` - Solo usuarios logueados
-   - `/cart` - Solo usuarios logueados
-   - `/orders` - Solo usuarios logueados
-   - `/api/products (POST)` - Solo admins
+4. **Route Protection**
+   - `/checkout` - Logged-in users only
+   - `/cart` - Logged-in users only
+   - `/orders` - Logged-in users only
+   - `/api/products (POST)` - Admins only
 
-5. **Storage de Token**
-   - Token guardado en `localStorage` del navegador
-   - Incluido en header `Authorization: Bearer <token>` en requests
-   - Limpiado al hacer logout
+5. **Token Storage**
+   - Token saved in browser `localStorage`
+   - Included in `Authorization: Bearer <token>` header in requests
+   - Cleared on logout
 
-6. **Funcionalidad de Logout**
-   - Elimina token de localStorage
-   - Redirige a login.html
-   - Limpia datos de sesión
-
----
-
-### SEMANA 5: ADMIN DASHBOARD & REPORTING (15%)
-
-**Dashboard Administrativo:**
-
-1. **Gestión de Productos**
-   - ✅ Verificación de rol admin
-   - ✅ Formulario para agregar productos
-   - ✅ Tabla dinámica que carga desde BD
-   - ✅ Campos: nombre, categoría, precio, stock, descripción
-
-2. **Fallback a localStorage**
-   - Si no hay conexión con backend, guarda productos en localStorage
-   - Permite agregar productos incluso sin API disponible
-   - Sincroniza automáticamente cuando backend está activo
-
-3. **Interfaz**
-   - Tabla responsiva con productos
-   - Formulario con validación
-   - Logout con limpieza de sesión
+6. **Logout Functionality**
+   - Removes token from localStorage
+   - Redirects to login.html
+   - Clears session data
 
 ---
 
-### SEMANA 6: TESTING AUTOMATION (20%)
+### WEEK 5: ADMIN DASHBOARD & REPORTING (15%)
 
-**Testing Implementado:**
+**Administrative Dashboard:**
+
+1. **Product Management**
+   - ✅ Admin role verification
+   - ✅ Form for adding products
+   - ✅ Dynamic table loading from DB
+   - ✅ Fields: name, category, price, stock, description
+
+2. **localStorage Fallback**
+   - If no backend connection, saves products to localStorage
+   - Allows adding products even without API available
+   - Automatically syncs when backend is active
+
+3. **Interface**
+   - Responsive table with products
+   - Form with validation
+   - Logout with session cleanup
+
+---
+
+### WEEK 6: TESTING AUTOMATION (20%)
+
+**Implemented Testing:**
 
 #### A) Selenium Testing (10+ tests)
-- ✅ Page Object Model (POM) para mantenibilidad
-- ✅ Explicit waits para elementos dinámicos
+- ✅ Page Object Model (POM) for maintainability
+- ✅ Explicit waits for dynamic elements
 - ✅ Data-driven testing
-- ✅ Validaciones de BD
+- ✅ Database validations
 
 ```python
 class TestShopping:
     def test_add_to_cart(self, driver, base_url):
-        """Test agregar producto al carrito"""
+        """Test adding product to cart"""
         catalog = CatalogPage(driver, base_url)
         catalog.navigate()
         catalog.add_to_cart('Cross Chains')
         assert catalog.get_cart_count() == 1
 
     def test_login_and_checkout(self, driver, base_url):
-        """Test login y checkout completo"""
+        """Test complete login and checkout"""
         login = LoginPage(driver, base_url)
         login.navigate()
         login.login('admin', 'Admin@123')
-        # ... validaciones
+        # ... validations
 ```
 
 #### B) Katalon Testing (10 tests)
-- Tests de UI recording
+- UI recording tests
 - API testing
 - Data-driven registration
 - Viewport testing
 
 #### C) JMeter Performance Testing
-- Load testing con 50-100 usuarios
-- Test endpoints críticos:
+- Load testing with 50-100 users
+- Test critical endpoints:
   - Login
-  - Listar productos
-  - Agregar al carrito
+  - List products
+  - Add to cart
   - Checkout
-- Análisis de tiempos de respuesta
+- Response time analysis
 
-**Reportes de Testing:**
+**Testing Reports:**
 - `test_results/katalon_results.csv`
 - `test_results/pytest_selected_report.html`
 - `test_results/jmeter_performance_report.html`
 
 ---
 
-### SEMANA 7: CI/CD & DOCUMENTATION (15%)
+### WEEK 7: CI/CD & DOCUMENTATION (15%)
 
 **GitHub Actions Workflow (`.github/workflows/ci.yml`):**
 
@@ -416,90 +416,90 @@ jobs:
           path: test_results/
 ```
 
-**Documentación:**
-- ✅ README.md completo con instrucciones
-- ✅ Documentación técnica del API
-- ✅ Guía de instalación y setup
-- ✅ Explicación de arquitectura
+**Documentation:**
+- ✅ Complete README.md with instructions
+- ✅ API technical documentation
+- ✅ Installation and setup guide
+- ✅ Architecture explanation
 
 ---
 
-## CARACTERÍSTICAS IMPLEMENTADAS
+## IMPLEMENTED FEATURES
 
-### 1. Autenticación y Autorización
-- ✅ Registro de usuarios con validación de contraseña fuerte
-- ✅ Hash seguro de contraseñas con bcrypt
-- ✅ JWT para autenticación stateless
-- ✅ Roles diferenciados (user/admin)
-- ✅ Protección de rutas según permisos
-- ✅ Logout con limpieza de sesión
+### 1. Authentication and Authorization
+- ✅ User registration with strong password validation
+- ✅ Secure password hashing with bcrypt
+- ✅ JWT for stateless authentication
+- ✅ Differentiated roles (user/admin)
+- ✅ Route protection based on permissions
+- ✅ Logout with session cleanup
 
-### 2. Gestión de Productos
-- ✅ Catálogo dinámico desde BD
-- ✅ Filtros por categoría, precio, búsqueda
-- ✅ Dashboard admin para CRUD de productos
-- ✅ Validación de stock
+### 2. Product Management
+- ✅ Dynamic catalog from DB
+- ✅ Filters by category, price, search
+- ✅ Admin dashboard for product CRUD
+- ✅ Stock validation
 
-### 3. Carrito y Checkout
-- ✅ Agregar/modificar/eliminar items
-- ✅ Persistencia en BD y localStorage
-- ✅ Checkout multi-paso (shipping, payment, review)
-- ✅ Validación de direcciones
-- ✅ Cálculo automático de impuestos
+### 3. Cart and Checkout
+- ✅ Add/modify/remove items
+- ✅ Persistence in DB and localStorage
+- ✅ Multi-step checkout (shipping, payment, review)
+- ✅ Address validation
+- ✅ Automatic tax calculation
 
-### 4. Órdenes y Historial
-- ✅ Registro de órdenes en BD
-- ✅ Historial por usuario
-- ✅ Estados de orden (pending, paid, shipped, completed)
+### 4. Orders and History
+- ✅ Order registration in DB
+- ✅ User-specific history
+- ✅ Order statuses (pending, paid, shipped, completed)
 
-### 5. UI/UX Responsivo
-- ✅ Diseño mobile-first
-- ✅ Validación en tiempo real de formularios
-- ✅ Toasts y modales para feedback
-- ✅ Tema oscuro/claro con CSS variables
-- ✅ Animaciones suaves
+### 5. Responsive UI/UX
+- ✅ Mobile-first design
+- ✅ Real-time form validation
+- ✅ Toasts and modals for feedback
+- ✅ Dark/light theme with CSS variables
+- ✅ Smooth animations
 
-### 6. Seguridad
-- ✅ CORS configurado
-- ✅ Validación de entrada en frontend y backend
-- ✅ Prevención de SQL injection (prepared statements)
-- ✅ Prevención de XSS (escaping de HTML)
-- ✅ Rate limiting en endpoints críticos
+### 6. Security
+- ✅ CORS configured
+- ✅ Input validation in frontend and backend
+- ✅ SQL injection prevention (prepared statements)
+- ✅ XSS prevention (HTML escaping)
+- ✅ Rate limiting on critical endpoints
 
 ---
 
-## TESTING Y CALIDAD
+## TESTING AND QUALITY
 
-### Estrategia de Testing
+### Testing Strategy
 
-| Tipo | Cantidad | Herramienta | Cobertura |
-|------|----------|------------|-----------|
-| Unit Tests | 6+ | Pytest | Lógica de negocio |
-| Integration Tests | 8+ | Selenium | Flujos end-to-end |
-| UI Tests | 10 | Katalon | Interfaz de usuario |
-| Performance Tests | 5+ | JMeter | Carga y stress |
-| **TOTAL** | **30+** | - | Completo |
+| Type | Quantity | Tool | Coverage |
+|------|----------|------|----------|
+| Unit Tests | 6+ | Pytest | Business logic |
+| Integration Tests | 8+ | Selenium | End-to-end flows |
+| UI Tests | 10 | Katalon | User interface |
+| Performance Tests | 5+ | JMeter | Load and stress |
+| **TOTAL** | **30+** | - | Complete |
 
-### Casos de Prueba Destacados
+### Featured Test Cases
 
-1. **test_admin_login_and_view_products** - Verificación de dashboard
-2. **test_register_and_login** - Flujo de autenticación
-3. **test_add_to_cart_and_checkout** - Compra completa
-4. **test_cross_browser** - Compatibilidad navegadores
-5. **test_product_filtering** - Funcionalidad de filtros
-6. **jmeter_load_test** - Comportamiento bajo carga
+1. **test_admin_login_and_view_products** - Dashboard verification
+2. **test_register_and_login** - Authentication flow
+3. **test_add_to_cart_and_checkout** - Complete purchase
+4. **test_cross_browser** - Browser compatibility
+5. **test_product_filtering** - Filter functionality
+6. **jmeter_load_test** - Behavior under load
 
-### Resultados
-- ✅ 30+ test cases implementados
-- ✅ Coverage de flujos críticos de negocio
-- ✅ Validación de performance bajo carga
-- ✅ Reportes automáticos generados
+### Results
+- ✅ 30+ test cases implemented
+- ✅ Coverage of critical business flows
+- ✅ Performance validation under load
+- ✅ Automatically generated reports
 
 ---
 
 ## CI/CD
 
-### Pipeline Automatizado
+### Automated Pipeline
 
 ```
 push to GitHub
@@ -517,110 +517,110 @@ Upload artifacts
 Notification (pass/fail)
 ```
 
-### Beneficios
-- ✅ Tests automáticos en cada push
-- ✅ Detección temprana de bugs
-- ✅ Reportes generados automáticamente
-- ✅ Historial de cambios auditables
-- ✅ Despliegue automatizado (lista para producción)
+### Benefits
+- ✅ Automatic tests on every push
+- ✅ Early bug detection
+- ✅ Automatically generated reports
+- ✅ Auditable change history
+- ✅ Automated deployment (production-ready)
 
 ---
 
-## INSTALACIÓN Y SETUP
+## INSTALLATION AND SETUP
 
-### Requisitos Previos
+### Prerequisites
 - Node.js 18+
 - Python 3.9+
 - MySQL 8.0+
 - Git
 
-### Pasos de Instalación
+### Installation Steps
 
-**1. Clonar repositorio**
+**1. Clone repository**
 ```bash
 git clone <repository-url>
 cd project
 ```
 
-**2. Configurar base de datos**
+**2. Configure database**
 ```bash
 mysql -u root -p < db_setup.sql
 ```
 
-**3. Instalar dependencias backend**
+**3. Install backend dependencies**
 ```bash
 cd backend
 npm install
 ```
 
-**4. Instalar dependencias testing**
+**4. Install testing dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-**5. Iniciar servidor backend**
+**5. Start backend server**
 ```bash
 cd backend
 node server.js
-# Servidor en http://localhost:3000
+# Server at http://localhost:3000
 ```
 
-**6. Abrir en navegador**
+**6. Open in browser**
 ```
 http://localhost:3000
 ```
 
 ---
 
-## LOGROS Y APRENDIZAJES
+## ACHIEVEMENTS AND LEARNINGS
 
-### Logros Técnicos
-1. ✅ Desarrollo full-stack completo
-2. ✅ Implementación segura de autenticación
-3. ✅ Testing exhaustivo y CI/CD
-4. ✅ Código limpio y documentado
-5. ✅ Buenas prácticas de la industria
+### Technical Achievements
+1. ✅ Complete full-stack development
+2. ✅ Secure authentication implementation
+3. ✅ Comprehensive testing and CI/CD
+4. ✅ Clean and documented code
+5. ✅ Industry best practices
 
-### Competencias Desarrolladas
+### Developed Competencies
 - **Backend**: Express.js, REST APIs, JWT, MySQL
 - **Frontend**: HTML5, CSS3, Vanilla JS, Async/Await
 - **Testing**: Selenium, Page Object Model, JMeter
 - **DevOps**: GitHub Actions, CI/CD
-- **Bases de Datos**: Diseño relacional, queries optimizadas
-- **Seguridad**: Hashing, JWT, SQL injection prevention
+- **Databases**: Relational design, optimized queries
+- **Security**: Hashing, JWT, SQL injection prevention
 
-### Desafíos Superados
-- Sincronización carrito (localStorage + API)
-- Validación multi-paso en checkout
-- Testing en múltiples navegadores
-- Performance bajo carga (JMeter)
-
----
-
-## CONCLUSIONES
-
-Este proyecto demuestra profundo entendimiento en:
-
-1. **Arquitectura Full-Stack** - Frontend y backend integrados
-2. **Seguridad** - Autenticación, autorización, validación
-3. **Testing** - Múltiples niveles (unit, integration, performance)
-4. **DevOps** - Automatización y CI/CD
-5. **Buenas Prácticas** - Código limpio, documentación, versionado
-
-El resultado es una **plataforma e-commerce profesional, segura y lista para producción** que puede escalar a usuarios reales.
+### Overcome Challenges
+- Cart synchronization (localStorage + API)
+- Multi-step checkout validation
+- Multi-browser testing
+- Performance under load (JMeter)
 
 ---
 
-## REFERENCIAS TÉCNICAS
+## CONCLUSIONS
 
-### Documentación Externa
+This project demonstrates deep understanding in:
+
+1. **Full-Stack Architecture** - Integrated frontend and backend
+2. **Security** - Authentication, authorization, validation
+3. **Testing** - Multiple levels (unit, integration, performance)
+4. **DevOps** - Automation and CI/CD
+5. **Best Practices** - Clean code, documentation, versioning
+
+The result is a **professional, secure, and production-ready e-commerce platform** that can scale to real users.
+
+---
+
+## TECHNICAL REFERENCES
+
+### External Documentation
 - [Express.js Documentation](https://expressjs.com)
 - [MySQL 8.0 Reference](https://dev.mysql.com/doc/refman/8.0/en/)
 - [Node.js JWT Guide](https://nodejs.org/en/docs/)
 - [Selenium Python Docs](https://www.selenium.dev/documentation/webdriver/)
 - [GitHub Actions](https://docs.github.com/en/actions)
 
-### Librerías Utilizadas
+### Used Libraries
 ```json
 {
   "backend": {
@@ -641,21 +641,21 @@ El resultado es una **plataforma e-commerce profesional, segura y lista para pro
 
 ---
 
-## COMMITS REALIZADOS
+## COMMITS MADE
 
-Total: 15-20 commits distribuidos por semanas
-- Semana 1-2: Database + Backend (3-4 commits)
-- Semana 3: Frontend Integration (3-4 commits)
-- Semana 4: Authentication (3-4 commits)
-- Semana 5: Admin Dashboard (2-3 commits)
-- Semana 6: Testing (3-4 commits)
-- Semana 7: CI/CD + Documentation (2-3 commits)
+Total: 15-20 commits distributed across weeks
+- Weeks 1-2: Database + Backend (3-4 commits)
+- Week 3: Frontend Integration (3-4 commits)
+- Week 4: Authentication (3-4 commits)
+- Week 5: Admin Dashboard (2-3 commits)
+- Week 6: Testing (3-4 commits)
+- Week 7: CI/CD + Documentation (2-3 commits)
 
 ---
 
-**FIN DEL REPORTE**
+**END OF REPORT**
 
-*Documento preparado por: Sebastián Muñoz*  
-*Institución: Matrix College*  
-*Carrera: Computer Science*  
-*Fecha: 17 de marzo de 2026*
+*Document prepared by: Sebastián Muñoz*  
+*Institution: Matrix College*  
+*Program: Computer Science*  
+*Date: March 17, 2026*
