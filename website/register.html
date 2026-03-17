@@ -309,45 +309,43 @@
       }
       
       if (isValid) {
-        // Store user data in localStorage
-        const users = JSON.parse(localStorage.getItem('registered_users') || '[]');
-        
-        // Check if username or email already exists
-        if (users.some(u => u.username === username)) {
-          showError('error-username', 'Username already taken');
-          return;
-        }
-        if (users.some(u => u.email === email)) {
-          showError('error-email', 'Email already registered');
-          return;
-        }
-        
+        // Register via API
         const userData = {
           firstName,
           lastName,
           email,
           age,
-          phone: formData.get('phone'),
-          country: formData.get('country'),
           username,
-          password, // In production, this should be hashed!
-          newsletter: formData.get('newsletter') === 'on',
-          registeredAt: new Date().toISOString()
+          password
         };
         
-        users.push(userData);
-        localStorage.setItem('registered_users', JSON.stringify(users));
-        
-        // Show success message
-        const successMsg = document.getElementById('success-msg');
-        successMsg.textContent = `Account created successfully! Welcome, ${firstName}! Redirecting to login...`;
-        successMsg.style.display = 'block';
-        
-        // Reset form
-        this.reset();
-        
-        // Redirect to login after 2 seconds
-        setTimeout(() => {
+        try {
+          const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData)
+          });
+          const data = await response.json();
+          
+          if (response.ok) {
+            const successMsg = document.getElementById('success-msg');
+            successMsg.textContent = `Account created successfully! Welcome, ${firstName}! Redirecting to login...`;
+            successMsg.style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            
+            // Redirect to login after 2 seconds
+            setTimeout(() => {
+              window.location.href = 'login.html';
+            }, 2000);
+          } else {
+            showError('error-general', data.error || 'Registration failed');
+          }
+        } catch (err) {
+          showError('error-general', 'Network error');
+        }
+      }
           window.location.href = 'login.html';
         }, 2000);
       }

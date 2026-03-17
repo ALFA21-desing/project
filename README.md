@@ -48,6 +48,42 @@ The repository now includes a lightweight Python helper located in
 ``utils/Database.py`` which wraps ``mysql-connector-python``.  Install the
 extra dependency by running ``pip install -r requirements.txt``.
 Connection parameters default to environment variables
+
+## 🚀 API Endpoints
+
+### Authentication
+- `POST /api/register` - Register a new user
+- `POST /api/login` - Login user and return JWT token
+
+### Products
+- `GET /api/products` - Get all products
+- `POST /api/products` - Add new product (admin only)
+
+### Cart
+- `GET /api/cart` - Get user's cart
+- `POST /api/cart` - Add item to cart
+- `PUT /api/cart/:id` - Update cart item quantity
+- `DELETE /api/cart/:id` - Remove item from cart
+
+### Orders
+- `GET /api/orders` - Get user's order history
+- `POST /api/checkout` - Process checkout
+
+## 🧪 Testing
+
+### Selenium Tests
+Run with: `pytest tests/`
+
+### Katalon Tests
+Located in `test_data/` and scripts in `scripts/`
+
+### JMeter Performance Tests
+Create JMeter test plan for load testing login, products, cart, checkout.
+
+## 🔐 Security
+- Passwords hashed with bcrypt
+- JWT authentication for protected routes
+- SQL injection protection via parameterized queries
 (``DB_HOST``, ``DB_USER`` etc.) and the database name
 ``jewelry_store_db`` is used by default.
 

@@ -241,21 +241,36 @@
     let itemsPerPage = 10;
     let currentSort = { column: 'orderDate', direction: 'desc' };
 
-    // Load orders from localStorage
-    function loadOrders() {
-      allOrders = JSON.parse(localStorage.getItem('order_history') || '[]');
+    // Load orders from API
+    async function loadOrders() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
       
-      // Add random status for demo purposes
-      allOrders = allOrders.map(order => {
-        if (!order.status) {
-          const statuses = ['completed', 'processing', 'pending'];
-          order.status = statuses[Math.floor(Math.random() * statuses.length)];
-        }
-        return order;
-      });
-      
-      filteredOrders = [...allOrders];
-      renderTable();
+      try {
+        const response = await fetch('/api/orders', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        allOrders = await response.json();
+        
+        // Format for display
+        allOrders = allOrders.map(order => ({
+          orderId: order.order_id,
+          orderDate: order.created_at,
+          total: order.total,
+          status: order.status
+        }));
+        
+        filteredOrders = [...allOrders];
+        renderTable();
+      } catch (err) {
+        console.error('Failed to load orders', err);
+        allOrders = [];
+        filteredOrders = [];
+        renderTable();
+      }
     }
 
     // Sort functionality

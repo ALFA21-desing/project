@@ -200,43 +200,66 @@
     // Password validation regex
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
-    // Login with validation
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    // Login with API
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const username = document.getElementById('username').value.trim();
         const password = document.getElementById('password').value;
         const msg = document.getElementById('loginMessage');
         
-        // Check demo users first
-        let user = demoUsers.find(u => u.username === username && u.password === password);
-        
-        // If not found in demo, check registered users
-        if (!user) {
-            const registeredUsers = JSON.parse(localStorage.getItem('registered_users') || '[]');
-            user = registeredUsers.find(u => u.username === username && u.password === password);
-        }
-        
-        if (user) {
-            // Store logged in user
-            localStorage.setItem('current_user', JSON.stringify({
-                username: username,
-                loginTime: new Date().toISOString()
-            }));
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
             
-            msg.textContent = `Welcome back, ${username}! Redirecting...`;
-            msg.className = 'success';
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('current_user', JSON.stringify(data.user));
+                
+                msg.textContent = `Welcome back, ${username}! Redirecting...`;
+                msg.className = 'success';
+                
+                setTimeout(() => {
+                    if (data.user.role === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }, 1200);
+            } else {
+                throw new Error(data.error || 'Login failed');
+            }
+        } catch (err) {
+            // Fallback to demo users if API fails
+            const demoUsers = [
+                { username: 'admin', password: 'Admin@123', role: 'admin' },
+                { username: 'user', password: 'User@123', role: 'user' }
+            ];
+            const user = demoUsers.find(u => u.username === username && u.password === password);
             
-            setTimeout(() => {
-                // redirect admin to the admin dashboard page
-                if (username.toLowerCase() === 'admin') {
-                    window.location.href = 'admin.html';
-                } else {
-                    window.location.href = 'index.html';
-                }
-            }, 1200);
-        } else {
-            msg.textContent = 'Incorrect username or password.';
-            msg.className = 'error';
+            if (user) {
+                localStorage.setItem('current_user', JSON.stringify({
+                    username: username,
+                    role: user.role
+                }));
+                
+                msg.textContent = `Welcome back, ${username}! (Demo mode) Redirecting...`;
+                msg.className = 'success';
+                
+                setTimeout(() => {
+                    if (user.role === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }, 1200);
+            } else {
+                msg.textContent = 'Incorrect username or password.';
+                msg.className = 'error';
+            }
         }
     });
 

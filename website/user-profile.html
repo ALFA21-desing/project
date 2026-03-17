@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Jewelry obelisco</title>
+    <link rel="icon" href="assets/LO.ico" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="top-header">
+            <div style="display:flex;align-items:center;gap:12px">
+                <img src="assets/LO.ico" alt="Logo obelisco" class="logo" />
+                <h1><a href="index.html" style="color:inherit;text-decoration:none;cursor:pointer">OBELISCO</a></h1>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+                <span id="datetime-display" style="color:var(--muted);font-size:0.85rem;margin-right:10px"></span>
+                <a href="cart.html" style="color:var(--text);text-decoration:none">Cart (<span id="cart-count">0</span>)</a>
+                <a href="#" id="logoutLink" style="color:var(--text);text-decoration:none">Logout</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="catalogo.html">Catalog</a></li>
+                <li><a href="user-profile.html" class="active">Profile</a></li>
+                <li><a href="contacto.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="max-width:800px;margin:20px auto;padding:0 16px;">
+        <h2>Your Profile</h2>
+        <div id="profile-info"></div>
+    </main>
+
+    <script src="cart.js"></script>
+    <script>
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('current_user') || '{}');
+        if (!token || !user.username) {
+            window.location.href = 'login.html';
+        }
+
+        function loadProfile() {
+            const el = document.getElementById('profile-info');
+            el.innerHTML = `
+                <p><strong>Username:</strong> ${user.username}</p>
+                <p><strong>Role:</strong> ${user.role}</p>
+                <p><strong>User ID:</strong> ${user.userId}</p>
+            `;
+        }
+
+        document.getElementById('logoutLink').addEventListener('click', e => {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            localStorage.removeItem('current_user');
+            window.location.href = 'login.html';
+        });
+
+        loadProfile();
+    </script>
+</body>
+</html>

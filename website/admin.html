@@ -57,6 +57,17 @@
     <div class="container">
         <h2>Product Management</h2>
         <p>Below is the current list of products stored in the database.</p>
+        
+        <h3>Add New Product</h3>
+        <form id="addProductForm">
+            <input type="text" id="productName" placeholder="Name" required>
+            <input type="text" id="productCategory" placeholder="Category">
+            <input type="number" id="productPrice" placeholder="Price" step="0.01" required>
+            <input type="number" id="productStock" placeholder="Stock" required>
+            <textarea id="productDescription" placeholder="Description"></textarea>
+            <button type="submit">Add Product</button>
+        </form>
+        
         <table id="productsTable">
             <thead>
                 <tr>
@@ -109,21 +120,44 @@
             window.location.href = 'login.html';
         }
 
-        // fetch products from backend
+        // fetch products from backend or localStorage
         async function loadProducts() {
             try {
+                // Try to load from API if available
                 const resp = await fetch('/api/products');
-                const products = await resp.json();
-                const tbody = document.querySelector('#productsTable tbody');
-                tbody.innerHTML = '';
-                if (products.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7">No products available.</td></tr>';
+                if (resp.ok) {
+                    const products = await resp.json();
+                    const tbody = document.querySelector('#productsTable tbody');
+                    tbody.innerHTML = '';
+                    products.forEach(p => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${p.product_id}</td>
+                            <td>${p.name}</td>
+                            <td>${p.category || ''}</td>
+                            <td>${p.price}</td>
+                            <td>${p.stock}</td>
+                            <td>${p.description || ''}</td>
+                            <td>${p.created_at}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
                     return;
                 }
-                products.forEach(p => {
+            } catch (err) {
+                console.log('API not available, using localStorage');
+            }
+            
+            // Fallback: Load from localStorage
+            const tbody = document.querySelector('#productsTable tbody');
+            const savedProducts = JSON.parse(localStorage.getItem('admin_products') || '[]');
+            
+            // Keep static rows, add saved ones
+            if (savedProducts.length > 0) {
+                savedProducts.forEach(p => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td>${p.product_id}</td>
+                        <td>${p.id}</td>
                         <td>${p.name}</td>
                         <td>${p.category || ''}</td>
                         <td>${p.price}</td>
@@ -133,19 +167,77 @@
                     `;
                     tbody.appendChild(tr);
                 });
-            } catch (err) {
-                console.error('failed to load products', err);
-                const tbody = document.querySelector('#productsTable tbody');
-                // keep any static rows rather than wipe everything,
-                // but show an error row at the end
-                tbody.insertAdjacentHTML('beforeend',
-                    '<tr><td colspan="7">Error loading products (showing sample data)</td></tr>');
             }
         }
+
+        // Add product form
+        document.getElementById('addProductForm').addEventListener('submit', async e => {
+            e.preventDefault();
+            const name = document.getElementById('productName').value.trim();
+            const category = document.getElementById('productCategory').value.trim();
+            const price = document.getElementById('productPrice').value;
+            const stock = document.getElementById('productStock').value;
+            const description = document.getElementById('productDescription').value.trim();
+            
+            if (!name || !price || !stock) {
+                alert('❌ Please fill in required fields (Name, Price, Stock)');
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('token');
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                }
+                
+                // Try API first if backend is running
+                try {
+                    const response = await fetch('/api/products', {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({ name, category, price, stock, description })
+                    });
+                    
+                    if (response.ok) {
+                        alert('✅ Product added to database!');
+                        loadProducts();
+                        e.target.reset();
+                        return;
+                    }
+                } catch (apiErr) {
+                    console.log('API not available, saving to localStorage');
+                }
+                
+                // Fallback: Save to localStorage
+                const savedProducts = JSON.parse(localStorage.getItem('admin_products') || '[]');
+                const newProduct = {
+                    id: Math.max(...savedProducts.map(p => p.id || 0), 20) + 1,
+                    name: name,
+                    category: category,
+                    price: parseFloat(price),
+                    stock: parseInt(stock),
+                    description: description,
+                    created_at: new Date().toLocaleString()
+                };
+                
+                savedProducts.push(newProduct);
+                localStorage.setItem('admin_products', JSON.stringify(savedProducts));
+                
+                alert('✅ Product added locally!');
+                loadProducts();
+                e.target.reset();
+                
+            } catch (err) {
+                console.error('Error adding product:', err);
+                alert('❌ Error: ' + err.message);
+            }
+        });
 
         document.getElementById('logoutLink').addEventListener('click', e => {
             e.preventDefault();
             localStorage.removeItem('current_user');
+            localStorage.removeItem('token');
             window.location.href = 'login.html';
         });
 

@@ -1,49 +1,150 @@
 const CART_KEY = 'obelisco_cart_v1';
 
+console.log('cart.js loaded');
+
+function getToken() {
+  return localStorage.getItem('token');
+}
+
 function loadCart(){
-  try{ return JSON.parse(localStorage.getItem(CART_KEY)) || []; }catch(e){ return []; }
+  if (getToken()) {
+    // Load from API
+    return fetchCartFromAPI();
+  } else {
+    // Fallback to localStorage
+    try{ return JSON.parse(localStorage.getItem(CART_KEY)) || []; }catch(e){ return []; }
+  }
+}
+
+async function fetchCartFromAPI() {
+  try {
+    const response = await fetch('/api/cart', {
+      headers: { 'Authorization': `Bearer ${getToken()}` }
+    });
+    if (response.ok) {
+      const cart = await response.json();
+      return cart.map(item => ({
+        title: item.name,
+        price: item.price,
+        qty: item.quantity,
+        id: item.cart_id
+      }));
+    }
+  } catch (e) {}
+  return [];
 }
 
 function saveCart(cart){ 
-  localStorage.setItem(CART_KEY, JSON.stringify(cart)); 
+  if (getToken()) {
+    // Save to API - but for now, just update local for display
+  } else {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart)); 
+  }
 }
 
-function updateCartCount(){
-  const cart = loadCart();
+async function updateCartCount(){
+  const cart = await loadCart();
   const count = cart.reduce((s,i)=>s+ (i.qty||1),0);
   document.querySelectorAll('#cart-count').forEach(el=>el.textContent = count);
 }
 
-function addToCart(item){
-  const cart = loadCart();
-  const found = cart.find(i=>i.title === item.title);
-  if(found){ 
-    found.qty = (found.qty||1) + (item.qty||1); 
-  } else { 
-    cart.push({title:item.title, price: Number(item.price)||0, qty: item.qty||1}); 
+async function addToCart(item){
+  console.log('addToCart called', item, 'token?', !!getToken());
+  
+  // If we don't know the product ID, always use local cart storage
+  if (!item.title || !item.price) {
+    console.warn('Invalid item:', item);
+    showToast('❌ Invalid product');
+    return;
   }
-  saveCart(cart);
-  updateCartCount();
+
+  try {
+    // Always save to local cart first (more reliable)
+    let cart = await loadCart();
+    if (!Array.isArray(cart)) cart = [];
+    
+    const found = cart.find(i=>i.title === item.title);
+    if(found){ 
+      found.qty = (found.qty||1) + (item.qty||1); 
+    } else { 
+      cart.push({
+        title: item.title, 
+        price: Number(item.price)||0, 
+        qty: item.qty||1,
+        id: item.id || null
+      }); 
+    }
+    saveCart(cart);
+    console.log('Cart saved locally:', cart);
+    
+    // If logged in and has productId, also save to API
+    if (getToken() && item.id) {
+      try {
+        const response = await fetch('/api/cart', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getToken()}`
+          },
+          body: JSON.stringify({ productId: item.id, quantity: item.qty || 1 })
+        });
+        if (!response.ok) {
+          console.warn('API addToCart returned:', response.status);
+        }
+      } catch (e) {
+        console.warn('API addToCart not available (backend offline?)', e);
+        // Cart is already saved locally, so it's fine
+      }
+    }
+    
+    await updateCartCount();
+    showToast('✅ Added to cart: ' + item.title);
+  } catch (e) {
+    console.error('addToCart error:', e);
+    showToast('❌ Error adding to cart');
+  }
 }
 
-function removeFromCart(title){
-  let cart = loadCart();
-  cart = cart.filter(i=>i.title !== title);
-  saveCart(cart); 
-  updateCartCount(); 
-  renderCart();
+async function removeFromCart(id){
+  if (getToken()) {
+    try {
+      await fetch(`/api/cart/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${getToken()}` }
+      });
+    } catch (e) {}
+  } else {
+    let cart = loadCart();
+    cart = cart.filter(i=>i.title !== id);
+    saveCart(cart); 
+  }
+  await updateCartCount(); 
+  await renderCart();
 }
 
-function changeQty(title, qty){
-  const cart = loadCart();
-  const it = cart.find(i=>i.title===title);
-  if(it){ 
-    it.qty = qty; 
-    if(it.qty<1) it.qty =1; 
+async function changeQty(id, qty){
+  if (getToken()) {
+    try {
+      await fetch(`/api/cart/${id}`, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getToken()}`
+        },
+        body: JSON.stringify({ quantity: qty })
+      });
+    } catch (e) {}
+  } else {
+    const cart = loadCart();
+    const it = cart.find(i=>i.title === id);
+    if(it){ 
+      it.qty = qty; 
+      if(it.qty<1) it.qty =1; 
+    }
+    saveCart(cart); 
   }
-  saveCart(cart); 
-  updateCartCount(); 
-  renderCart();
+  await updateCartCount(); 
+  await renderCart();
 }
 
 function escapeHtml(s){ 
@@ -52,14 +153,14 @@ function escapeHtml(s){
   }[ch])); 
 }
 
-function renderCart(){
-  const cart = loadCart();
+async function renderCart(){
+  const cart = await loadCart();
   const el = document.getElementById('cart-items');
   const totalEl = document.getElementById('cart-total');
   if(!el) return;
   
   el.innerHTML = '';
-  if(cart.length===0){ 
+  if(!cart || cart.length===0){ 
     el.innerHTML = '<p>Your cart is empty.</p>'; 
     totalEl.textContent = '$0.00'; 
     return; 
@@ -76,9 +177,9 @@ function renderCart(){
     row.innerHTML = `
       <div class="cart-title">🔄 ${escapeHtml(item.title)}</div>
       <div class="cart-price">$${(item.price||0).toFixed(2)}</div>
-      <div class="cart-qty"><input type="number" min="1" value="${item.qty}" data-title="${escapeHtml(item.title)}"></div>
+      <div class="cart-qty"><input type="number" min="1" value="${item.qty}" data-id="${item.id || item.title}"></div>
       <div class="cart-line">$${lineTotal.toFixed(2)}</div>
-      <div class="cart-actions"><button class="remove" data-title="${escapeHtml(item.title)}">Remove</button></div>
+      <div class="cart-actions"><button class="remove" data-id="${item.id || item.title}">Remove</button></div>
     `;
     
     row.addEventListener('dragstart', handleDragStart);
@@ -92,21 +193,21 @@ function renderCart(){
   
   totalEl.textContent = '$'+total.toFixed(2);
   
-  el.querySelectorAll('input[data-title]').forEach(inp=>{
-    inp.addEventListener('change', e=>{
-      const t = e.target.dataset.title; 
+  el.querySelectorAll('input[data-id]').forEach(inp=>{
+    inp.addEventListener('change', async e=>{
+      const id = e.target.dataset.id; 
       const v = parseInt(e.target.value) || 1; 
-      changeQty(t, v);
+      await changeQty(id, v);
     });
   });
   
   el.querySelectorAll('button.remove').forEach(btn=>{
     btn.addEventListener('click', e=>{ 
-      const title = e.target.dataset.title;
+      const id = e.target.dataset.id;
       showModal(
         'Remove Item',
-        `Are you sure you want to remove "${escapeHtml(title)}" from your cart?`,
-        () => removeFromCart(title),
+        `Are you sure you want to remove "${escapeHtml(id)}" from your cart?`,
+        async () => await removeFromCart(id),
         true
       );
     });
@@ -138,13 +239,13 @@ function handleDragOver(e) {
   return false;
 }
 
-function handleDrop(e) {
+async function handleDrop(e) {
   if (e.stopPropagation) {
     e.stopPropagation();
   }
   
   if (draggedElement !== this) {
-    const cart = loadCart();
+    const cart = await loadCart();
     const draggedIndex = parseInt(draggedElement.dataset.index);
     const targetIndex = parseInt(this.dataset.index);
     
@@ -152,7 +253,7 @@ function handleDrop(e) {
     cart.splice(targetIndex, 0, removed);
     
     saveCart(cart);
-    renderCart();
+    await renderCart();
     showToast('Cart order updated');
   }
   
@@ -164,12 +265,13 @@ function handleDragLeave(e) {
   this.classList.remove('drag-over');
 }
 
-document.addEventListener('click', function(e){
+document.addEventListener('click', async function(e){
   // Only respond to explicit add-to-cart triggers: elements with data-add="true"
   const addBtn = e.target.closest('[data-add="true"]');
   if(!addBtn) return;
   if(addBtn.closest && addBtn.closest('#checkout-form')) return;
   e.preventDefault();
+  e.stopPropagation();
 
   let title, price;
   const card = addBtn.closest('.product-card') || addBtn.closest('.product-detail') || addBtn.closest('.product-info');
@@ -190,34 +292,41 @@ document.addEventListener('click', function(e){
     }
   }
 
-  addToCart({title, price, qty:1});
+  console.log('cart click:', title, price);
+  await addToCart({title, price, qty:1});
   showToast('Added to cart: ' + title);
 });
 
-document.addEventListener('DOMContentLoaded', ()=>{
-  updateCartCount();
+document.addEventListener('DOMContentLoaded', async ()=>{
+  await updateCartCount();
+
+  // Prevent anchor default navigation for add-to-cart buttons
+  document.querySelectorAll('a[data-add="true"]').forEach(a => {
+    a.href = 'javascript:void(0)';
+    a.addEventListener('click', e => e.preventDefault());
+  });
   
   if(document.getElementById('cart-items')){
-    renderCart();
+    await renderCart();
     
     const form = document.getElementById('checkout-form');
     if(form) {
       setupCheckoutFlow();
       setupCardFormatting();
       
-      window.goToShipping = function() {
+      window.goToShipping = async function() {
         changeStep(1);
       };
       
-      window.goToPayment = function() {
+      window.goToPayment = async function() {
         if(validateStep(1)) {
           changeStep(2);
         }
       };
       
-      window.goToReview = function() {
+      window.goToReview = async function() {
         if(validateStep(2)) {
-          populateReviewStep();
+          await populateReviewStep();
           changeStep(3);
         }
       };
@@ -262,8 +371,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
           submitBtn.innerHTML = '⏳ Processing...';
         }
         
-        setTimeout(() => {
-          const cart = loadCart();
+        setTimeout(async () => {
+          const cart = await loadCart();
           const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
           const shipping = 15.00;
           const tax = subtotal * 0.08;
@@ -293,7 +402,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
           localStorage.setItem('last_order', JSON.stringify(orderDetails));
           
           saveCart([]);
-          updateCartCount();
+          await updateCartCount();
           
           document.getElementById('checkout-form').style.display = 'none';
           document.getElementById('checkout-progress').style.display = 'none';
@@ -545,8 +654,8 @@ function setupCardFormatting() {
   }
 }
 
-function populateReviewStep() {
-  const cart = loadCart();
+async function populateReviewStep() {
+  const cart = await loadCart();
   const reviewDiv = document.getElementById('order-review');
   
   if(reviewDiv && cart.length > 0) {
