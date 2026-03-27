@@ -1,16 +1,16 @@
 # 💎 Jewelry Obelisco - E-Commerce Platform
 
-## 📌 Overview
+##  Overview
 
 A complete, secure full-stack jewelry e-commerce platform built with modern web technologies. This project demonstrates comprehensive knowledge in backend development, frontend integration, database design, security implementation, automated testing, and CI/CD practices.
 
 **Key Features:**
-- 🔐 JWT Authentication with bcrypt password hashing
-- 🛒 Dynamic shopping cart with API synchronization
-- 👨‍💼 Admin dashboard for product management
-- 🧪 Comprehensive testing suite (Selenium, Katalon, JMeter)
-- 🚀 CI/CD pipeline with GitHub Actions
-- 📱 Responsive design with modern UI/UX
+-  JWT Authentication with bcrypt password hashing
+-  Dynamic shopping cart with API synchronization
+-  Admin dashboard for product management
+-  Comprehensive testing suite (Selenium, Katalon, JMeter)
+-  CI/CD pipeline with GitHub Actions
+-  Responsive design with modern UI/UX
 
 ## 🛠️ Technology Stack
 
@@ -39,7 +39,7 @@ A complete, secure full-stack jewelry e-commerce platform built with modern web 
 - **GitHub Actions** - CI/CD pipeline
 - **Git** - Version control
 
-## 🗄️ Database Schema
+##  Database Schema
 
 The application uses a MySQL database with the following tables:
 
@@ -64,35 +64,35 @@ The script creates the database `jewelry_store_db` and populates it with:
 - Demo regular user: `user` / `User@123`
 - Sample jewelry products (necklaces, rings, earrings)
 
-## 🚀 API Endpoints
+##  API Endpoints
 
 ### Authentication Endpoints
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| `POST` | `/api/register` | Register new user | ❌ |
-| `POST` | `/api/login` | User login with JWT | ❌ |
+| `POST` | `/api/register` | Register new user |  |
+| `POST` | `/api/login` | User login with JWT |   |
 
 ### Product Endpoints
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| `GET` | `/api/products` | Get all products | ❌ |
-| `POST` | `/api/products` | Add new product | ✅ (Admin only) |
+| `GET` | `/api/products` | Get all products |    |
+| `POST` | `/api/products` | Add new product | (Admin only) |
 
 ### Cart Endpoints
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| `GET` | `/api/cart` | Get user's cart | ✅ |
-| `POST` | `/api/cart` | Add item to cart | ✅ |
-| `PUT` | `/api/cart/:id` | Update item quantity | ✅ |
-| `DELETE` | `/api/cart/:id` | Remove item from cart | ✅ |
+| `GET` | `/api/cart` | Get user's cart |         |
+| `POST` | `/api/cart` | Add item to cart |       |
+| `PUT` | `/api/cart/:id` | Update item quantity  |
+| `DELETE` | `/api/cart/:id` | Remove item from cart |
 
 ### Order Endpoints
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `GET` | `/api/orders` | Get user's order history | ✅ |
-| `POST` | `/api/checkout` | Process purchase | ✅ |
+| Method | Endpoint | Description | Auth Required  |
+|--------|----------|-------------|--------------- |
+| `GET` | `/api/orders` | Get user's order history | 
+| `POST` | `/api/checkout` | Process purchase |    |
 
-## 🏃‍♂️ Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Node.js 18+
@@ -135,7 +135,7 @@ The script creates the database `jewelry_store_db` and populates it with:
    - Main site: `http://localhost:3000`
    - Admin login: `http://localhost:3000/admin.html`
 
-## 🔐 Security Features
+##  Security Features
 
 ### Authentication & Authorization
 - **Password Hashing:** bcrypt with salt rounds (10)
@@ -149,7 +149,7 @@ The script creates the database `jewelry_store_db` and populates it with:
 - **CORS Configuration:** Controlled cross-origin requests
 - **Input Validation:** Frontend and backend validation
 
-## 🧪 Testing Suite
+##  Testing Suite
 
 ### Test Categories
 
@@ -181,7 +181,7 @@ pytest tests/ --tb=short
 - CSV data: `test_results/katalon_results.csv`
 - Performance metrics: `test_results/jmeter_performance_report.html`
 
-## 🚀 CI/CD Pipeline
+##  CI/CD Pipeline
 
 ### GitHub Actions Workflow
 Automated testing and validation on every push/PR:
@@ -211,7 +211,7 @@ jobs:
           path: test_results/
 ```
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 project/
@@ -254,7 +254,7 @@ project/
         └── ci.yml          # GitHub Actions workflow
 ```
 
-## 🎯 Key Features Implemented
+##  Key Features Implemented
 
 ### User Experience
 - **Responsive Design:** Mobile-first approach
@@ -274,7 +274,7 @@ project/
 - **Performance:** Optimized queries and caching
 - **Scalability:** Modular architecture for growth
 
-## 📊 Performance Metrics
+##  Performance Metrics
 
 ### Load Testing Results (JMeter)
 - **Concurrent Users:** 100
@@ -288,7 +288,7 @@ project/
 - **UI Tests:** 10+ user interface validations
 - **Performance Tests:** 5+ load scenarios
 
-## 🔧 Development Notes
+##  Development Notes
 
 ### Environment Variables
 ```bash
@@ -315,7 +315,7 @@ PORT=3000
 - Safari 14+
 - Edge 90+
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/new-feature`)
@@ -323,11 +323,11 @@ PORT=3000
 4. Push to branch (`git push origin feature/new-feature`)
 5. Create a Pull Request
 
-## 📝 License
+##  License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👨‍💻 Author
+##  Author
 
 **Sebastián Muñoz**  
 **Student ID:** 5809025  
@@ -335,7 +335,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 **Program:** Computer Science  
 **Date:** March 17, 2026
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Matrix College faculty for guidance and support
 - Open source community for excellent tools and libraries
